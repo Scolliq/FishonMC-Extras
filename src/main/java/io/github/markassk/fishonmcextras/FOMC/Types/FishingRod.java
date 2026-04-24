@@ -31,9 +31,9 @@ public class FishingRod extends FOMCItem {
         super(type, Constant.DEFAULT);
         this.name = name;
         this.customModelData = customModelData;
-        this.soulboundRod = nbtCompound.getBoolean("soulbound_rod");
-        this.skin = nbtCompound.getString("skin");
-        this.owner = UUIDHelper.getUUID(nbtCompound.getIntArray("uuid"));
+        this.soulboundRod = nbtCompound.getBoolean("soulbound_rod", false);
+        this.skin = nbtCompound.getString("skin", "");
+        this.owner = UUIDHelper.getUUID(nbtCompound.getIntArray("uuid").orElse(new int[0]));
 
         if(nbtCompound.get("tacklebox") instanceof NbtList nbtList) {
             this.tacklebox = nbtList.stream().map(nbtElement -> {
@@ -82,19 +82,19 @@ public class FishingRod extends FOMCItem {
         if (!(nbtList.getFirst() instanceof NbtCompound firstItem)) {
             return null;
         }
-        NbtCompound components = firstItem.getCompound("components");
+        NbtCompound components = firstItem.getCompound("components").orElse(new NbtCompound());
         if (components == null) {
             return null;
         }
-        NbtCompound customData = components.getCompound("minecraft:custom_data");
+        NbtCompound customData = components.getCompound("minecraft:custom_data").orElse(new NbtCompound());
         if (customData == null) {
             return null;
         }
-        String type = customData.getString("type");
+        String type = customData.getString("type", "");
         if (!"bait".equals(type) && !"lure".equals(type)) {
             return null;
         }
-        String waterStr = customData.getString("water");
+        String waterStr = customData.getString("water", "");
         if (waterStr == null || waterStr.isEmpty()) {
             return Constant.ANY_WATER;
         }
@@ -108,7 +108,7 @@ public class FishingRod extends FOMCItem {
     public static FishingRod getFishingRod(ItemStack itemStack) {
         if(itemStack.get(DataComponentTypes.LORE) != null
                 && itemStack.get(DataComponentTypes.CUSTOM_DATA) != null
-                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem")) {
+                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem", false)) {
             if (itemStack.getItem() == Items.FISHING_ROD) {
                 return FishingRod.getFishingRod(itemStack, Defaults.ItemTypes.FISHINGROD, itemStack.getName().getString());
             }
@@ -120,6 +120,6 @@ public class FishingRod extends FOMCItem {
         if (itemStack == null || itemStack.isEmpty()) return false;
         NbtCompound nbt = ItemStackHelper.getNbt(itemStack);
         if (nbt == null) return false;
-        return nbt.getInt("disableBait") == 1;
+        return nbt.getInt("disableBait", 0) == 1;
     }
 }

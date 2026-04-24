@@ -36,7 +36,7 @@ public class AuctionHandler {
             if(nbtCompound != null && nbtCompound.contains("renderInfo", NbtElement.LIST_TYPE)) {
                 if(nbtCompound.get("renderInfo") instanceof NbtList nbtList) {
                     if(nbtList.size() == 1) {
-                        NbtCompound renderInfo = nbtList.getCompound(0);
+                        NbtCompound renderInfo = nbtList.getCompound(0).orElse(new NbtCompound());
                         float money = renderInfo.getFloat("money");
                         float moneyPerItem = money / itemStack.getCount();
 
@@ -79,7 +79,7 @@ public class AuctionHandler {
                 if(nbtCompound != null && nbtCompound.contains("renderInfo", NbtElement.LIST_TYPE)) {
                     if(nbtCompound.get("renderInfo") instanceof NbtList nbtList) {
                         if(nbtList.size() == 1) {
-                            NbtCompound renderInfo = nbtList.getCompound(0);
+                            NbtCompound renderInfo = nbtList.getCompound(0).orElse(new NbtCompound());
                             float money = renderInfo.getFloat("money");
                             float moneyPerItem = money / bait.counter;
 
@@ -95,7 +95,7 @@ public class AuctionHandler {
                 if(nbtCompound != null && nbtCompound.contains("renderInfo", NbtElement.LIST_TYPE)) {
                     if(nbtCompound.get("renderInfo") instanceof NbtList nbtList) {
                         if(nbtList.size() == 1) {
-                            NbtCompound renderInfo = nbtList.getCompound(0);
+                            NbtCompound renderInfo = nbtList.getCompound(0).orElse(new NbtCompound());
                             float money = renderInfo.getFloat("money");
                             float moneyPerItem = money / lure.counter;
 

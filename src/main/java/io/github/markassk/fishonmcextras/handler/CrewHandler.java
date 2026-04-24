@@ -67,9 +67,10 @@ public class CrewHandler {
                 ItemStack itemStack = minecraftClient.player.currentScreenHandler.getSlot(i).getStack();
                 if (
                         minecraftClient.player.currentScreenHandler.getSlot(i).inventory != minecraftClient.player.getInventory() && itemStack.getItem() == Items.PLAYER_HEAD
-                                && Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).id().isPresent()) {
-                    if(uuids.stream().noneMatch(uuid -> uuid.equals(Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).id().get()))) {
-                        uuids.add(Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).id().get());
+                                && Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).getGameProfile().id() != null) {
+                    UUID profileId = Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).getGameProfile().id();
+                    if(uuids.stream().noneMatch(uuid -> uuid.equals(profileId))) {
+                        uuids.add(profileId);
                     }
                 }
             }

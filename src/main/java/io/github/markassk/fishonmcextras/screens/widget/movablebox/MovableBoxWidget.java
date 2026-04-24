@@ -77,15 +77,15 @@ public class MovableBoxWidget extends ClickableWidget {
                 ),
                 getX() + width / 2 - textRenderer.getWidth(text) / 2, getY() + height / 2 + 1, 0xFFFFFF, true);
 
-        context.getMatrices().push();
+        context.getMatrices().pushMatrix();
         try {
-            context.getMatrices().translate((rightAlignment ? getX() + width: getX()), getY(), 0.0f);
+            context.getMatrices().translate((rightAlignment ? getX() + width: getX()), getY());
             context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rightAlignment ? 90.0F : -90.0F));
             Text alignmentText = Text.literal(rightAlignment ? "ʀɪɢʜᴛ" : "ʟᴇꜰᴛ").formatted(Formatting.GRAY, Formatting.ITALIC);
             context.drawText(textRenderer, alignmentText, rightAlignment ? height / 2 - textRenderer.getWidth(alignmentText) / 2 : - height / 2 - textRenderer.getWidth(alignmentText) / 2, 0, 0xFFFFFF, true);
 
         } finally {
-            context.getMatrices().pop();
+            context.getMatrices().popMatrix();
         }
     }
 

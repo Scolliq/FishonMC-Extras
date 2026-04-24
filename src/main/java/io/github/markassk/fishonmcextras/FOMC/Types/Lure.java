@@ -25,21 +25,21 @@ public class Lure extends FOMCItem {
     public final String color;
 
     private Lure(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
-        this.name = nbtCompound.getString("name");
+        super(type, Constant.valueOfId(nbtCompound.getString("rarity", "")));
+        this.name = nbtCompound.getString("name", "");
         this.customModelData = customModelData;
-        this.counter = nbtCompound.getInt("counter");
-        this.water = Constant.valueOfId(nbtCompound.getString("water"));
-        this.intricacy = nbtCompound.getString("intricacy");
-        this.color = nbtCompound.getString("color");
-        NbtList nbtList = nbtCompound.getList("base", NbtElement.LIST_TYPE);
+        this.counter = nbtCompound.getInt("counter", 0);
+        this.water = Constant.valueOfId(nbtCompound.getString("water", ""));
+        this.intricacy = nbtCompound.getString("intricacy", "");
+        this.color = nbtCompound.getString("color", "");
+        NbtList nbtList = nbtCompound.getListOrEmpty("base");
         List<NbtCompound> nbtCompoundList = new ArrayList<>();
         for (int i = 0; i < nbtList.size(); i++) {
-            nbtCompoundList.add(nbtList.getCompound(i));
+            nbtCompoundList.add(nbtList.getCompound(i).orElse(new NbtCompound()));
         }
         this.lureStats = nbtCompoundList.stream().map(LureStats::new).toList();
-        this.totalUses = nbtCompound.getInt("totalUses");
-        this.size = nbtCompound.getString("size");
+        this.totalUses = nbtCompound.getInt("totalUses", 0);
+        this.size = nbtCompound.getString("size", "");
     }
 
     public static class LureStats {
@@ -47,8 +47,8 @@ public class Lure extends FOMCItem {
         public final String id;
 
         private LureStats(NbtCompound nbtCompound) {
-            this.cur = nbtCompound.getInt("cur");
-            this.id = nbtCompound.getString("id");
+            this.cur = nbtCompound.getInt("cur", 0);
+            this.id = nbtCompound.getString("id", "");
         }
     }
 
@@ -60,10 +60,10 @@ public class Lure extends FOMCItem {
     public static Lure getLure(ItemStack itemStack) {
         if (itemStack.get(DataComponentTypes.LORE) != null
                 && itemStack.get(DataComponentTypes.CUSTOM_DATA) != null
-                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem")) {
+                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem", false)) {
             NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
             if (nbtCompound != null && nbtCompound.contains("type")
-                    && Objects.equals(nbtCompound.getString("type"), Defaults.ItemTypes.LURE)) {
+                    && Objects.equals(nbtCompound.getString("type", ""), Defaults.ItemTypes.LURE)) {
                 return Lure.getLure(itemStack, Defaults.ItemTypes.LURE);
             }
         }

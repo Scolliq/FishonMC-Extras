@@ -13,6 +13,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -30,7 +31,7 @@ public class PetEquipHud {
         ItemStack activePet = PetEquipHandler.instance().currentPetItem;
         ItemStack activePetItem = PetEquipHandler.instance().currentPetItemItem;
 
-        drawContext.getMatrices().push();
+        drawContext.getMatrices().pushMatrix();
         try {
             // Get screen size
             int screenWidth = client.getWindow().getScaledWidth();
@@ -50,7 +51,7 @@ public class PetEquipHud {
             // Scaling setup
             int fontSize = config.petEquipTracker.activePetHUDOptions.fontSize;
             float scale = fontSize / 10.0f;
-            drawContext.getMatrices().scale(scale, scale, 1f);
+            drawContext.getMatrices().scale(scale, scale);
 
             // Alpha
             int alphaInt = (int) ((config.petEquipTracker.activePetHUDOptions.backgroundOpacity / 100f) * 255f) << 24;
@@ -137,33 +138,33 @@ public class PetEquipHud {
                 int alphaOverlay = (int) ((config.theme.opacity / 100f) * 255f) << 24;
 
                 // Corners
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP_LEFT,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP_LEFT,
                         scaledX - padding - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16,
                         alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP_RIGHT,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP_RIGHT,
                         scaledX + padding * 2 + maxLength + 16 + extraBoxWidth - rightAlignmentOffset,
                         scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM_LEFT,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM_LEFT,
                         scaledX - padding - rightAlignmentOffset,
                         scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation, 16, 16,
                         alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM_RIGHT,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM_RIGHT,
                         scaledX + padding * 2 + maxLength + 16 + extraBoxWidth - rightAlignmentOffset,
                         scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation, 16, 16,
                         alphaOverlay | colorOverlay);
 
                 // Sides
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_LEFT,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_LEFT,
                         scaledX - padding - rightAlignmentOffset, scaledY + padding - heightClampTranslation, 16,
                         ((textList.size() - 1) * lineHeight) + padding, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_RIGHT,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_RIGHT,
                         scaledX + padding * 2 + 16 + maxLength + extraBoxWidth - rightAlignmentOffset,
                         scaledY + padding - heightClampTranslation, 16, ((textList.size() - 1) * lineHeight) + padding,
                         alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP,
                         scaledX + padding - rightAlignmentOffset, scaledY - padding - heightClampTranslation,
                         maxLength + padding + 16 + extraBoxWidth, 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM,
                         scaledX + padding - rightAlignmentOffset,
                         scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation,
                         maxLength + padding + 16 + extraBoxWidth, 16, alphaOverlay | colorOverlay);
@@ -171,17 +172,17 @@ public class PetEquipHud {
                 // Title
                 Text title = Text.literal("ᴘᴇᴛ").withColor(ThemingHandler.instance().currentThemeType.TEXT_COLOR)
                         .formatted(Formatting.BOLD);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TEXT_LEFT,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TEXT_LEFT,
                         scaledX + (maxLength + padding * 3 + 16 + extraBoxWidth) / 2 - textRenderer.getWidth(title) / 2
                                 - 16
                                 - rightAlignmentOffset,
                         scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TEXT_MIDDLE,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TEXT_MIDDLE,
                         scaledX + (maxLength + padding * 3 + 16 + extraBoxWidth) / 2 - textRenderer.getWidth(title) / 2
                                 - rightAlignmentOffset,
                         scaledY - padding - heightClampTranslation, textRenderer.getWidth(title), 16,
                         alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TEXT_RIGHT,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TEXT_RIGHT,
                         scaledX + (maxLength + padding * 3 + 16 + extraBoxWidth) / 2 + textRenderer.getWidth(title) / 2
                                 - rightAlignmentOffset,
                         scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
@@ -192,16 +193,16 @@ public class PetEquipHud {
             }
 
             // Flair
-            drawContext.drawGuiTexture(RenderLayer::getGuiTextured, flairDecor.GUI_FLAIR_TOP_LEFT,
+            drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, flairDecor.GUI_FLAIR_TOP_LEFT,
                     scaledX - padding - rightAlignmentOffset - 24, scaledY - padding - heightClampTranslation - 24, 64,
                     64);
-            drawContext.drawGuiTexture(RenderLayer::getGuiTextured, flairDecor.GUI_FLAIR_TOP_RIGHT,
+            drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, flairDecor.GUI_FLAIR_TOP_RIGHT,
                     scaledX + padding * 2 + maxLength + 16 + extraBoxWidth - rightAlignmentOffset - 24,
                     scaledY - padding - heightClampTranslation - 24, 64, 64);
-            drawContext.drawGuiTexture(RenderLayer::getGuiTextured, flairDecor.GUI_FLAIR_BOTTOM_LEFT,
+            drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, flairDecor.GUI_FLAIR_BOTTOM_LEFT,
                     scaledX - padding - rightAlignmentOffset - 24,
                     scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation - 24, 64, 64);
-            drawContext.drawGuiTexture(RenderLayer::getGuiTextured, flairDecor.GUI_FLAIR_BOTTOM_RIGHT,
+            drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, flairDecor.GUI_FLAIR_BOTTOM_RIGHT,
                     scaledX + padding * 2 + maxLength + 16 + extraBoxWidth - rightAlignmentOffset - 24,
                     scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation - 24, 64, 64);
 
@@ -213,7 +214,7 @@ public class PetEquipHud {
                     scaledY + (count.getAndIncrement() * lineHeight) + padding - finalHeightClampTranslation, 0xFFFFFF,
                     true));
         } finally {
-            drawContext.getMatrices().pop();
+            drawContext.getMatrices().popMatrix();
         }
     }
 }

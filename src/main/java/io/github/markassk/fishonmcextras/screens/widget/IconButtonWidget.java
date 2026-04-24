@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -73,16 +74,16 @@ public class IconButtonWidget extends ClickableWidget {
             int alphaOverlay = (int) 255f << 24;
 
             // Corners
-            context.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP_LEFT, this.getX() - 8, this.getY() - 8, 16, 16, alphaOverlay | colorOverlay);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP_RIGHT, this.getX() + this.width - 8, this.getY() - 8, 16, 16, alphaOverlay | colorOverlay);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM_LEFT, this.getX() - 8, this.getY() + this.height - 8, 16, 16, alphaOverlay | colorOverlay);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM_RIGHT, this.getX() + this.width - 8, this.getY() + this.height - 8, 16, 16, alphaOverlay | colorOverlay);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP_LEFT, this.getX() - 8, this.getY() - 8, 16, 16, alphaOverlay | colorOverlay);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP_RIGHT, this.getX() + this.width - 8, this.getY() - 8, 16, 16, alphaOverlay | colorOverlay);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM_LEFT, this.getX() - 8, this.getY() + this.height - 8, 16, 16, alphaOverlay | colorOverlay);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM_RIGHT, this.getX() + this.width - 8, this.getY() + this.height - 8, 16, 16, alphaOverlay | colorOverlay);
 
             // Sides
-            context.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_LEFT, this.getX() - 8, this.getY() + 8, 16, this.height - 16, alphaOverlay | colorOverlay);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_RIGHT, this.getX() + this.width - 8, this.getY() + 8, 16, this.height - 16, alphaOverlay | colorOverlay);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP, this.getX() + 8, this.getY() - 8, this.width - 16, 16, alphaOverlay | colorOverlay);
-            context.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM, this.getX() + 8, this.getY() + this.height - 8, this.width - 16, 16, alphaOverlay | colorOverlay);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_LEFT, this.getX() - 8, this.getY() + 8, 16, this.height - 16, alphaOverlay | colorOverlay);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_RIGHT, this.getX() + this.width - 8, this.getY() + 8, 16, this.height - 16, alphaOverlay | colorOverlay);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP, this.getX() + 8, this.getY() - 8, this.width - 16, 16, alphaOverlay | colorOverlay);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM, this.getX() + 8, this.getY() + this.height - 8, this.width - 16, 16, alphaOverlay | colorOverlay);
         }
     }
 

@@ -20,14 +20,14 @@ public class Line extends FOMCItem {
     public final List<LineStats> lineStats;
 
     private Line(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
-        this.name = nbtCompound.getString("name");
+        super(type, Constant.valueOfId(nbtCompound.getString("rarity", "")));
+        this.name = nbtCompound.getString("name", "");
         this.customModelData = customModelData;
-        this.water = Constant.valueOfId(nbtCompound.getString("water"));
-        NbtList nbtList = nbtCompound.getList("base", NbtElement.LIST_TYPE);
+        this.water = Constant.valueOfId(nbtCompound.getString("water", ""));
+        NbtList nbtList = nbtCompound.getListOrEmpty("base");
         List<NbtCompound> nbtCompoundList = new ArrayList<>();
         for (int i = 0; i < nbtList.size(); i++) {
-            nbtCompoundList.add(nbtList.getCompound(i));
+            nbtCompoundList.add(nbtList.getCompound(i).orElse(new NbtCompound()));
         }
         this.lineStats = nbtCompoundList.stream().map(LineStats::new).toList();
     }
@@ -37,8 +37,8 @@ public class Line extends FOMCItem {
         public final String id;
 
         private LineStats(NbtCompound nbtCompound) {
-            this.cur = nbtCompound.getInt("cur");
-            this.id = nbtCompound.getString("id");
+            this.cur = nbtCompound.getInt("cur", 0);
+            this.id = nbtCompound.getString("id", "");
         }
     }
 
@@ -49,10 +49,10 @@ public class Line extends FOMCItem {
     public static Line getLine(ItemStack itemStack) {
         if(itemStack.get(DataComponentTypes.LORE) != null
                 && itemStack.get(DataComponentTypes.CUSTOM_DATA) != null
-                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem")) {
+                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem", false)) {
             NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
             if (nbtCompound != null && nbtCompound.contains("type")
-                    && Objects.equals(nbtCompound.getString("type"), Defaults.ItemTypes.LINE)) {
+                    && Objects.equals(nbtCompound.getString("type", ""), Defaults.ItemTypes.LINE)) {
                 return Line.getLine(itemStack, Defaults.ItemTypes.LINE);
             }
         }

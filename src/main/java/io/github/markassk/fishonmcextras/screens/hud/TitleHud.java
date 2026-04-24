@@ -43,7 +43,7 @@ public class TitleHud {
             List<Text> subtitle = TitleHandler.instance().subtitle;
 
             // Title
-            drawContext.getMatrices().push();
+            drawContext.getMatrices().pushMatrix();
             try {
                 // Get screen size
                 int screenWidth = client.getWindow().getScaledWidth();
@@ -56,7 +56,7 @@ public class TitleHud {
                 // Scaling setup
                 float fontSize = config.titlePopup.scale * 2f;
                 float scale = fontSize / 10.0f;
-                drawContext.getMatrices().scale(scale, scale, 1f);
+                drawContext.getMatrices().scale(scale, scale);
 
                 int lineSpacing = 4;
                 int lineHeight = (int) (textRenderer.fontHeight + (lineSpacing / scale));
@@ -66,11 +66,11 @@ public class TitleHud {
 
                 title.forEach(text -> drawContext.drawText(textRenderer, text, scaledX - textRenderer.getWidth(text) / 2, scaledY - ((count.getAndIncrement() + 1) * lineHeight), alphaInt, true));
             } finally {
-                drawContext.getMatrices().pop();
+                drawContext.getMatrices().popMatrix();
             }
 
             // subtitle
-            drawContext.getMatrices().push();
+            drawContext.getMatrices().pushMatrix();
             try {
                 // Get screen size
                 int screenWidth = client.getWindow().getScaledWidth();
@@ -83,7 +83,7 @@ public class TitleHud {
                 // Scaling setup
                 float fontSize = config.titlePopup.scale * 1f;
                 float scale = fontSize / 10.0f;
-                drawContext.getMatrices().scale(scale, scale, 1f);
+                drawContext.getMatrices().scale(scale, scale);
 
                 int lineSpacing = 4;
                 int lineHeight = (int) (textRenderer.fontHeight + (lineSpacing / scale));
@@ -93,7 +93,7 @@ public class TitleHud {
 
                 subtitle.forEach(text -> drawContext.drawText(textRenderer, text, scaledX - textRenderer.getWidth(text) / 2, scaledY + (count.getAndIncrement() * lineHeight) + lineHeight, alphaInt, true));
             } finally {
-                drawContext.getMatrices().pop();
+                drawContext.getMatrices().popMatrix();
             }
         }
     }

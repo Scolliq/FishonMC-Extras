@@ -26,7 +26,7 @@ public class EquipmentHud {
         ItemStack pole = EquipmentHudHandler.instance().getPole();
         ItemStack line = EquipmentHudHandler.instance().getLine();
 
-        drawContext.getMatrices().push();
+        drawContext.getMatrices().pushMatrix();
         try {
             // Get screen size
             int screenWidth = client.getWindow().getScaledWidth();
@@ -43,7 +43,7 @@ public class EquipmentHud {
             // Scaling setup
             int fontSize = config.equipmentTracker.fontSize;
             float scale = fontSize / 10.0f;
-            drawContext.getMatrices().scale(scale, scale, 1f);
+            drawContext.getMatrices().scale(scale, scale);
 
             // Alpha
             int alphaInt = (int) ((config.equipmentTracker.backgroundOpacity / 100f) * 255f) << 24;
@@ -72,7 +72,7 @@ public class EquipmentHud {
             renderBox(drawContext, textRenderer, scaledX + 44 + offsetMiddleRodParts, scaledY - offsetBottomRodParts - 20, alphaInt, line, "ʟ", "line");
 
         } finally {
-            drawContext.getMatrices().pop();
+            drawContext.getMatrices().popMatrix();
         }
     }
 

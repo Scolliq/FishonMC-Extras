@@ -2,7 +2,9 @@ package io.github.markassk.fishonmcextras.screens.main;
 
 import io.github.markassk.fishonmcextras.config.ConfigConstants;
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
+import io.github.markassk.fishonmcextras.handler.SessionHandler;
 import io.github.markassk.fishonmcextras.handler.TabHandler;
+import io.github.markassk.fishonmcextras.screens.SessionHistoryScreen;
 import io.github.markassk.fishonmcextras.screens.debug.DebugScreen;
 import io.github.markassk.fishonmcextras.screens.movehud.MoveHudScreen;
 import io.github.markassk.fishonmcextras.screens.widget.IconButtonWidget;
@@ -65,6 +67,29 @@ public class MainScreen extends Screen {
                 .position(width / 2 + 4, height / 2 + 4)
                 .itemIcon(Items.STRUCTURE_VOID.getDefaultStack())
                 .width(130)
+                .build());
+
+        boolean sessionActive = SessionHandler.instance().isSessionActive;
+        widgets.add(IconButtonWidget.builder(
+                        Text.literal(sessionActive ? "⏹ End Session" : "▶ Start Session"),
+                        button -> {
+                            SessionHandler.instance().toggleSession(minecraftClient);
+                            minecraftClient.setScreen(new MainScreen(minecraftClient, parent));
+                        })
+                .position(width / 2 + 4, height / 2 + 32)
+                .itemIcon(Items.CLOCK.getDefaultStack())
+                .width(130)
+                .tooltip(Tooltip.of(Text.literal(sessionActive
+                        ? "End the current session and save it"
+                        : "Start a new session (wipes current stats)")))
+                .build());
+
+        widgets.add(IconButtonWidget.builder(Text.literal("Session History"),
+                        button -> minecraftClient.setScreen(new SessionHistoryScreen(minecraftClient.currentScreen)))
+                .position(width / 2 + 4, height / 2 + 60)
+                .itemIcon(Items.BOOK.getDefaultStack())
+                .width(130)
+                .tooltip(Tooltip.of(Text.literal("View all past sessions and records")))
                 .build());
 
         if(ConfigConstants.DEV) {

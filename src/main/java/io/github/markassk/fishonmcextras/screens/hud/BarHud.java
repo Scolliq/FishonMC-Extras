@@ -18,7 +18,7 @@ public class BarHud {
         Text middleText = BarHudHandler.instance().assembleMiddleText();
         Text rightText = BarHudHandler.instance().assembleRightText();
 
-        drawContext.getMatrices().push();
+        drawContext.getMatrices().pushMatrix();
         try {
             // Get non scaled screen size
             int width = client.getWindow().getWidth();
@@ -28,7 +28,7 @@ public class BarHud {
             // Scaling setup
             int fontSize = config.barHUD.fontSize;
             float scale = fontSize / 10.0f;
-            drawContext.getMatrices().scale(scale, scale, 1f);
+            drawContext.getMatrices().scale(scale, scale);
 
             // Alpha
             int alphaInt = (int) ((config.barHUD.backgroundOpacity / 100f) * 255f) << 24;
@@ -46,7 +46,7 @@ public class BarHud {
             }
             drawContext.drawText(textRenderer, rightText, scaledX - textRenderer.getWidth(rightText) - padding, padding, 0xFFFFFF, true);
         } finally {
-            drawContext.getMatrices().pop();
+            drawContext.getMatrices().popMatrix();
         }
     }
 }

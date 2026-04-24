@@ -66,13 +66,13 @@ public class BaitSortingHelperHandler {
             int alphaInt = (int) (0.6f * 255f) << 24;
             int rgb = ColorHelper.getClrFromString(baitKey);
 
-            drawContext.getMatrices().push();
+            drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.getMatrices().translate(0, 0, 100);
+                drawContext.getMatrices().translate(0, 0);
                 drawContext.fill(x, y, x + 16, y + 16,
                         alphaInt | rgb);
             } finally {
-                drawContext.getMatrices().pop();
+                drawContext.getMatrices().popMatrix();
             }
         }
     }

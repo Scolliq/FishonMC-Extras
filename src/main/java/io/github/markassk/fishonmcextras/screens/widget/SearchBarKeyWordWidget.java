@@ -24,9 +24,9 @@ public class SearchBarKeyWordWidget extends TextFieldWidget {
         super.renderWidget(drawContext, mouseX, mouseY, delta);
         // Hover Info
         if(this.isHovered() && this.isFocused()) {
-            drawContext.getMatrices().push();
+            drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.getMatrices().translate(0, 0, 320);
+                drawContext.getMatrices().translate(0, 0);
 
                 int padding = 4;
                 int lineHeight = textRenderer.fontHeight + 1;
@@ -41,22 +41,22 @@ public class SearchBarKeyWordWidget extends TextFieldWidget {
                     drawContext.drawText(textRenderer, text, this.getX() + this.width / 2 - length / 2, this.getBottom() + padding + count.getAndIncrement() * lineHeight, 0xFFFFFF, true);
                 });
             } finally {
-                drawContext.getMatrices().pop();
+                drawContext.getMatrices().popMatrix();
             }
         }
 
         // Special Focus
         if(this.isSpecialFocus()) {
-            drawContext.getMatrices().push();
+            drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.getMatrices().translate(0, 0, 300);
+                drawContext.getMatrices().translate(0, 0);
                 int PADDING = 2;
                 if(this.isFocused()) {
                     drawContext.drawBorder(this.getX(), this.getY(), this.width, this.height, 0xFFFFAA00);
                 }
                 drawContext.drawBorder(this.getX() + PADDING, this.getY() + PADDING, this.width - PADDING * 2, this.height - PADDING * 2, 0xFFFFAA00);
             } finally {
-                drawContext.getMatrices().pop();
+                drawContext.getMatrices().popMatrix();
             }
         }
     }

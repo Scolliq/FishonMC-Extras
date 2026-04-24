@@ -185,9 +185,9 @@ public abstract class ChatScreenMixin {
         int yAbove = chatField.getY() - boxH - 2;
         int y = yAbove >= 0 ? yAbove : chatField.getY() + chatField.getHeight() + 2;
 
-        context.getMatrices().push();
+        context.getMatrices().pushMatrix();
         try {
-            context.getMatrices().translate(0, 0, 320);
+            context.getMatrices().translate(0, 0);
 
             context.fill(x, y, x + boxW, y + boxH, 0xCC000000);
             // context.drawBorder(x, y, boxW, boxH, 0xFFFFAA00);
@@ -203,7 +203,7 @@ public abstract class ChatScreenMixin {
                 context.drawText(textRenderer, display, x + paddingX, rowY, 0xFFFFFF, true);
             }
         } finally {
-            context.getMatrices().pop();
+            context.getMatrices().popMatrix();
         }
 
         suggestX = x;

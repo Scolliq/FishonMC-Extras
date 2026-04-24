@@ -24,7 +24,7 @@ public class BaitHud {
         ItemStack baitStack = Items.COOKED_COD.getDefaultStack().copy();
         baitStack.set(DataComponentTypes.CUSTOM_MODEL_DATA, modelData);
 
-        drawContext.getMatrices().push();
+        drawContext.getMatrices().pushMatrix();
         try {
             if(!Objects.equals(baitText.getString(), ""))  {
                 // Get screen size
@@ -44,7 +44,7 @@ public class BaitHud {
                 // Scaling setup
                 int fontSize = config.baitTracker.fontSize;
                 float scale = fontSize / 10.0f;
-                drawContext.getMatrices().scale(scale, scale, 1f);
+                drawContext.getMatrices().scale(scale, scale);
 
                 // Alpha
                 int alphaInt = (int) ((config.baitTracker.backgroundOpacity / 100f) * 255f) << 24;
@@ -82,7 +82,7 @@ public class BaitHud {
                 }
             }
         } finally {
-            drawContext.getMatrices().pop();
+            drawContext.getMatrices().popMatrix();
         }
     }
 }

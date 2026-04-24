@@ -36,7 +36,7 @@ public class DebugScreen extends Screen {
 
         List<Text> textList = DebugScreenHandler.instance().assembleDebugText(handler);
 
-        context.getMatrices().push();
+        context.getMatrices().pushMatrix();
         try {
             // Get screen size
             int screenWidth = minecraftClient.getWindow().getScaledWidth();
@@ -49,7 +49,7 @@ public class DebugScreen extends Screen {
             // Scaling setup
             int fontSize = 8;
             float scale = fontSize / 10.0f;
-            context.getMatrices().scale(scale, scale, 1f);
+            context.getMatrices().scale(scale, scale);
 
             int lineSpacing = 2;
             int lineHeight = (int) (textRenderer.fontHeight + (lineSpacing / scale));
@@ -97,7 +97,7 @@ public class DebugScreen extends Screen {
             ));
 
         } finally {
-            context.getMatrices().pop();
+            context.getMatrices().popMatrix();
         }
     }
 

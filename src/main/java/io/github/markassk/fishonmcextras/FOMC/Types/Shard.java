@@ -16,9 +16,9 @@ public class Shard extends FOMCItem {
 
     private Shard(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData) {
         super(type, Constant.DEFAULT);
-        this.climateId = nbtCompound.getString("name");
+        this.climateId = nbtCompound.getString("name", "");
         this.customModelData = customModelData;
-        this.rarity = Constant.valueOfId(nbtCompound.getString("rarity"));
+        this.rarity = Constant.valueOfId(nbtCompound.getString("rarity", ""));
     }
 
     public static Shard getShard(ItemStack itemStack, String type) {
@@ -28,10 +28,10 @@ public class Shard extends FOMCItem {
     public static Shard getShard(ItemStack itemStack) {
         if(itemStack.get(DataComponentTypes.LORE) != null
                 && itemStack.get(DataComponentTypes.CUSTOM_DATA) != null
-                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem")) {
+                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem", false)) {
             NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
             if (nbtCompound != null && nbtCompound.contains("type")
-                    && Objects.equals(nbtCompound.getString("type"), Defaults.ItemTypes.SHARD)) {
+                    && Objects.equals(nbtCompound.getString("type", ""), Defaults.ItemTypes.SHARD)) {
                 return Shard.getShard(itemStack, Defaults.ItemTypes.SHARD);
             }
         }

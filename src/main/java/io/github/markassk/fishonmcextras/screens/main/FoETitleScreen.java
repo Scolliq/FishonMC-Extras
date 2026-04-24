@@ -19,6 +19,7 @@ import net.minecraft.client.network.MultiplayerServerListPinger;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -145,7 +146,7 @@ public class FoETitleScreen extends Screen {
 
         int textureSize = (int) (512 / 4f);
 
-        context.drawGuiTexture(RenderLayer::getGuiTextured, ICON, Math.max(xPos - textureSize / 2, 40 + (BUTTON_FULL_WIDTH - textureSize) / 2), yPos - textureSize, textureSize, textureSize);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, ICON, Math.max(xPos - textureSize / 2, 40 + (BUTTON_FULL_WIDTH - textureSize) / 2), yPos - textureSize, textureSize, textureSize);
     }
 
     private void renderServerStatus(DrawContext context) {
@@ -186,7 +187,7 @@ public class FoETitleScreen extends Screen {
             else if(serverInfo.ping < 300L) tex = PING_2_TEXTURE;
             else tex = PING_1_TEXTURE;
 
-            context.drawGuiTexture(RenderLayer::getGuiTextured, tex, Math.max(x, 162 + 40), y, 10, 8);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, tex, Math.max(x, 162 + 40), y, 10, 8);
         }
     }
 
@@ -214,7 +215,7 @@ public class FoETitleScreen extends Screen {
 
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
-        context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, 0, 0, 0, 0, sw, sh, sw, sh);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURE, 0, 0, 0, 0, sw, sh, sw, sh);
     }
 
     @Override

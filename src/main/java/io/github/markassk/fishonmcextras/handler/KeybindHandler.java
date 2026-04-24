@@ -1,6 +1,7 @@
 package io.github.markassk.fishonmcextras.handler;
 
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
+import io.github.markassk.fishonmcextras.handler.SessionHandler;
 import io.github.markassk.fishonmcextras.mixin.KeyBindingAccessor;
 import io.github.markassk.fishonmcextras.screens.main.MainScreen;
 import io.github.markassk.fishonmcextras.util.AdvancedKeyBinding;
@@ -26,6 +27,8 @@ public class KeybindHandler {
 			GLFW.GLFW_KEY_Z, "category.fishonmcextras.general");
 	public final AdvancedKeyBinding baitSortingHelper = new AdvancedKeyBinding("key.fishonmcextras.baitsortinghelper",
 			GLFW.GLFW_KEY_B, "category.fishonmcextras.general");
+	public final AdvancedKeyBinding sessionToggle = new AdvancedKeyBinding("key.fishonmcextras.sessiontoggle",
+			GLFW.GLFW_KEY_N, "category.fishonmcextras.general");
 
 	public boolean showExtraInfo = false;
 	public boolean visualizeBaitSorting = false;
@@ -41,12 +44,21 @@ public class KeybindHandler {
 		KeybindHandler.register(
 				this.openConfigKeybind,
 				this.openExtraInfoKeybind,
-				this.baitSortingHelper);
+				this.baitSortingHelper,
+				this.sessionToggle);
 	}
 
 	public void tick(MinecraftClient minecraftClient) {
 		this.openConfigKeybind.onPressed(
 				() -> minecraftClient.setScreen(new MainScreen(minecraftClient, minecraftClient.currentScreen)));
+
+		this.sessionToggle.onPressed(() -> {
+			SessionHandler.instance().toggleSession(minecraftClient);
+			minecraftClient.getSoundManager().play(
+					PositionedSoundInstance.master(
+							SoundEvents.BLOCK_NOTE_BLOCK_PLING,
+							SessionHandler.instance().isSessionActive ? 1.5f : 0.5f));
+		});
 
 		this.baitSortingHelper.onPressed(() -> {
 			boolean showOnlyWhilePressingKeybind = FishOnMCExtrasConfig

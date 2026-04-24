@@ -85,16 +85,16 @@ public class FriendsCommandHandler {
 
         for (PlayerListEntry entry : client.getNetworkHandler().getPlayerList()) {
             if (entry != null && entry.getProfile() != null
-                    && Objects.equals(entry.getProfile().getName(), username)) {
-                return Optional.of(entry.getProfile().getId());
+                    && Objects.equals(entry.getProfile().name(), username)) {
+                return Optional.of(entry.getProfile().id());
             }
         }
 
         for (PlayerListEntry entry : client.getNetworkHandler().getPlayerList()) {
             if (entry != null && entry.getProfile() != null
-                    && entry.getProfile().getName() != null
-                    && entry.getProfile().getName().equalsIgnoreCase(username)) {
-                return Optional.of(entry.getProfile().getId());
+                    && entry.getProfile().name() != null
+                    && entry.getProfile().name().equalsIgnoreCase(username)) {
+                return Optional.of(entry.getProfile().id());
             }
         }
 
@@ -114,8 +114,8 @@ public class FriendsCommandHandler {
 
         for (PlayerListEntry entry : client.getNetworkHandler().getPlayerList()) {
             if (entry != null && entry.getProfile() != null
-                    && friends.stream().anyMatch(id -> id.equals(entry.getProfile().getId()))) {
-                onlineNames.add(entry.getProfile().getName());
+                    && friends.stream().anyMatch(id -> id.equals(entry.getProfile().id()))) {
+                onlineNames.add(entry.getProfile().name());
             }
         }
 

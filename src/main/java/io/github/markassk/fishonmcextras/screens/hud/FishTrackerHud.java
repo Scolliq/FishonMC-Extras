@@ -9,6 +9,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class FishTrackerHud {
         // Assemble all text lines
         List<Text> textList = FishTrackerHudHandler.instance().assembleFishText();
 
-        drawContext.getMatrices().push();
+        drawContext.getMatrices().pushMatrix();
         try {
             // Get screen size
             int screenWidth = client.getWindow().getScaledWidth();
@@ -41,7 +42,7 @@ public class FishTrackerHud {
             // Scaling setup
             int fontSize = config.fishTracker.fontSize;
             float scale = fontSize / 10.0f;
-            drawContext.getMatrices().scale(scale, scale, 1f);
+            drawContext.getMatrices().scale(scale, scale);
 
             // Alpha
             int alphaInt = (int) ((config.fishTracker.backgroundOpacity / 100f) * 255f) << 24;
@@ -74,36 +75,36 @@ public class FishTrackerHud {
                 int alphaOverlay = (int) ((config.theme.opacity / 100f) * 255f) << 24;
 
                 // Corners
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP_LEFT, scaledX - padding - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM_LEFT, scaledX - padding - rightAlignmentOffset, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP_LEFT, scaledX - padding - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM_LEFT, scaledX - padding - rightAlignmentOffset, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
 
                 // Sides
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_LEFT, scaledX - padding - rightAlignmentOffset, scaledY + padding - heightClampTranslation, 16, ((textList.size() - 1) * lineHeight) + padding, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset, scaledY + padding - heightClampTranslation, 16, ((textList.size() - 1) * lineHeight) + padding, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TOP, scaledX + padding - rightAlignmentOffset, scaledY - padding - heightClampTranslation, maxLength, 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_BOTTOM, scaledX + padding - rightAlignmentOffset, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation, maxLength, 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_LEFT, scaledX - padding - rightAlignmentOffset, scaledY + padding - heightClampTranslation, 16, ((textList.size() - 1) * lineHeight) + padding, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset, scaledY + padding - heightClampTranslation, 16, ((textList.size() - 1) * lineHeight) + padding, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TOP, scaledX + padding - rightAlignmentOffset, scaledY - padding - heightClampTranslation, maxLength, 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_BOTTOM, scaledX + padding - rightAlignmentOffset, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation, maxLength, 16, alphaOverlay | colorOverlay);
 
                 // Title
                 Text title = FishTrackerHudHandler.instance().getTitle().copy().withColor(ThemingHandler.instance().currentThemeType.TEXT_COLOR);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TEXT_LEFT, scaledX + (maxLength + padding * 2) / 2 - textRenderer.getWidth(title) / 2 - 16 - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TEXT_MIDDLE, scaledX  + (maxLength + padding * 2) / 2 - textRenderer.getWidth(title) / 2 - rightAlignmentOffset, scaledY - padding - heightClampTranslation, textRenderer.getWidth(title), 16, alphaOverlay | colorOverlay);
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, theme.GUI_TEXT_RIGHT, scaledX + (maxLength + padding * 2) / 2 + textRenderer.getWidth(title) / 2 - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TEXT_LEFT, scaledX + (maxLength + padding * 2) / 2 - textRenderer.getWidth(title) / 2 - 16 - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TEXT_MIDDLE, scaledX  + (maxLength + padding * 2) / 2 - textRenderer.getWidth(title) / 2 - rightAlignmentOffset, scaledY - padding - heightClampTranslation, textRenderer.getWidth(title), 16, alphaOverlay | colorOverlay);
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, theme.GUI_TEXT_RIGHT, scaledX + (maxLength + padding * 2) / 2 + textRenderer.getWidth(title) / 2 - rightAlignmentOffset, scaledY - padding - heightClampTranslation, 16, 16, alphaOverlay | colorOverlay);
                 drawContext.drawText(textRenderer, title, scaledX + (maxLength + padding * 2) / 2 - textRenderer.getWidth(title) / 2 - rightAlignmentOffset, scaledY - textRenderer.fontHeight / 2 - heightClampTranslation - 1, themeTextColor, false);
             }
 
             // Flair
-            drawContext.drawGuiTexture(RenderLayer::getGuiTextured, flairDecor.GUI_FLAIR_TOP_LEFT, scaledX - padding - rightAlignmentOffset - 24, scaledY - padding - heightClampTranslation - 24, 64, 64);
-            drawContext.drawGuiTexture(RenderLayer::getGuiTextured, flairDecor.GUI_FLAIR_TOP_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset - 24, scaledY - padding - heightClampTranslation - 24, 64, 64);
-            drawContext.drawGuiTexture(RenderLayer::getGuiTextured, flairDecor.GUI_FLAIR_BOTTOM_LEFT, scaledX - padding - rightAlignmentOffset - 24, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation - 24, 64, 64);
-            drawContext.drawGuiTexture(RenderLayer::getGuiTextured, flairDecor.GUI_FLAIR_BOTTOM_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset - 24, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation - 24, 64, 64);
+            drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, flairDecor.GUI_FLAIR_TOP_LEFT, scaledX - padding - rightAlignmentOffset - 24, scaledY - padding - heightClampTranslation - 24, 64, 64);
+            drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, flairDecor.GUI_FLAIR_TOP_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset - 24, scaledY - padding - heightClampTranslation - 24, 64, 64);
+            drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, flairDecor.GUI_FLAIR_BOTTOM_LEFT, scaledX - padding - rightAlignmentOffset - 24, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation - 24, 64, 64);
+            drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, flairDecor.GUI_FLAIR_BOTTOM_RIGHT, scaledX + padding + maxLength - rightAlignmentOffset - 24, scaledY + padding * 2 + ((textList.size() - 1) * lineHeight) - heightClampTranslation - 24, 64, 64);
 
 
             int finalHeightClampTranslation = heightClampTranslation;
             textList.forEach(text -> drawContext.drawText(textRenderer, text, rightAlignment ? scaledX - textRenderer.getWidth(text) - padding: scaledX + padding, scaledY + (count.getAndIncrement() * lineHeight) + padding - finalHeightClampTranslation, 0xFFFFFF, true));
         } finally {
-            drawContext.getMatrices().pop();
+            drawContext.getMatrices().popMatrix();
         }
     }
 }

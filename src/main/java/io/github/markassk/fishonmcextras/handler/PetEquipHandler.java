@@ -157,7 +157,7 @@ public class PetEquipHandler  {
         if (items.isEmpty()) {
             return;
         }
-        NbtCompound itemNbt = items.getCompound(0);
+        NbtCompound itemNbt = items.getCompound(0).orElse(new NbtCompound());
         ItemStack decodedItem = ItemStack.CODEC
                 .parse(NbtOps.INSTANCE, itemNbt)
                 .result()

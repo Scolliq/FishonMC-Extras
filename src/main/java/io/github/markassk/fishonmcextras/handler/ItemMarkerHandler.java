@@ -15,6 +15,7 @@ import io.github.markassk.fishonmcextras.util.TextHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
@@ -60,7 +61,7 @@ public class ItemMarkerHandler {
                 drawContext.getMatrices().pushMatrix();
                 try {
                     if (config.itemMarker.itemSlotMarker.showFishRarityMarker) {
-                        drawContext.drawGuiTexture(RenderLayer::getGuiTextured, rarityMarker, x, y, 16, 16,
+                        drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, rarityMarker, x, y, 16, 16,
                                 alpha | rarity.COLOR);
                     }
 
@@ -70,7 +71,7 @@ public class ItemMarkerHandler {
                                 x + 16 - MinecraftClient.getInstance().textRenderer.getWidth(sizeChar),
                                 y + 16 - MinecraftClient.getInstance().textRenderer.fontHeight + 1, 0xFFFFFF, true);
                     } else if (config.itemMarker.itemSlotMarker.showFishSizeMarker == FishSizeMarkerToggle.MARKER) {
-                        drawContext.drawGuiTexture(RenderLayer::getGuiTextured, fishSizeMarker, x, y, 16, 16,
+                        drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, fishSizeMarker, x, y, 16, 16,
                                 alpha | size.COLOR);
                     }
                 } finally {
@@ -82,7 +83,7 @@ public class ItemMarkerHandler {
             int alpha = ((int) 255f << 24);
             drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, rarityMarker, x, y, 16, 16,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, rarityMarker, x, y, 16, 16,
                         alpha | rarity.COLOR);
             } finally {
                 drawContext.getMatrices().popMatrix();
@@ -96,7 +97,7 @@ public class ItemMarkerHandler {
                 int alpha = ((int) 255f << 24);
                 drawContext.getMatrices().pushMatrix();
                 try {
-                    drawContext.drawGuiTexture(RenderLayer::getGuiTextured, petItemMarker, x, y, 16, 16,
+                    drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, petItemMarker, x, y, 16, 16,
                             alpha | 0xFFFFFF);
                 } finally {
                     drawContext.getMatrices().popMatrix();
@@ -120,7 +121,7 @@ public class ItemMarkerHandler {
                                 x + 16 - MinecraftClient.getInstance().textRenderer.getWidth(constChar),
                                 y + 16 - MinecraftClient.getInstance().textRenderer.fontHeight + 1, 0xFFFFFF, true);
                     } else if (config.itemMarker.itemSlotMarker.showPetPercentMarker == PetPercentMarkerToggle.MARKER) {
-                        drawContext.drawGuiTexture(RenderLayer::getGuiTextured, fishSizeMarker, x, y, 16, 16,
+                        drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, fishSizeMarker, x, y, 16, 16,
                                 alpha | constant.COLOR);
                     }
                 } finally {
@@ -142,13 +143,13 @@ public class ItemMarkerHandler {
                     
                     // perfect shows when both luck AND scale are maxed
                     if (pet.isMaxLuck() && pet.isMaxScale()) {
-                        drawContext.drawGuiTexture(RenderLayer::getGuiTextured, maxPerfectMarker, iconX, iconY, iconSize, iconSize);
+                        drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, maxPerfectMarker, iconX, iconY, iconSize, iconSize);
                     }
                     else if (pet.isMaxLuck()) {
-                        drawContext.drawGuiTexture(RenderLayer::getGuiTextured, maxLuckMarker, iconX, iconY, iconSize, iconSize);
+                        drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, maxLuckMarker, iconX, iconY, iconSize, iconSize);
                     }
                     else if (pet.isMaxScale()) {
-                        drawContext.drawGuiTexture(RenderLayer::getGuiTextured, maxScaleMarker, iconX, iconY, iconSize, iconSize);
+                        drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, maxScaleMarker, iconX, iconY, iconSize, iconSize);
                     }
                 } finally {
                     drawContext.getMatrices().popMatrix();
@@ -166,7 +167,7 @@ public class ItemMarkerHandler {
             int alpha = ((int) 175f << 24);
             drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, selectedSlotMarker, x, y, 16, 16,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, selectedSlotMarker, x, y, 16, 16,
                         alpha | config.itemMarker.selectedPetHighlightColor);
             } finally {
                 drawContext.getMatrices().popMatrix();
@@ -232,7 +233,7 @@ public class ItemMarkerHandler {
             int alpha = ((int) (0.6f * 255f) << 24);
             drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.drawGuiTexture(RenderLayer::getGuiTextured, selectedSlotMarker, x, y, 16, 16,
+                drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, selectedSlotMarker, x, y, 16, 16,
                         alpha | config.itemMarker.selectedPetHighlightColor);
             } finally {
                 drawContext.getMatrices().popMatrix();
