@@ -49,7 +49,7 @@ public class PlayerArgumentType implements ArgumentType<String> {
 
             return entitySelectorReader.listSuggestions(builder, builderx -> CommandSource.suggestMatching(commandSource.getPlayerNames().stream().filter(s -> {
                 if (MinecraftClient.getInstance().player != null) {
-                    return !Objects.equals(s, MinecraftClient.getInstance().player.getGameProfile().getName());
+                    return !Objects.equals(s, MinecraftClient.getInstance().player.getGameProfile().name());
                 }
                 return true;
             }), builderx));

@@ -57,9 +57,8 @@ public class ItemMarkerHandler {
                 Constant size = Fish.getSize(itemStack);
 
                 int alpha = ((int) 255f << 24);
-                drawContext.getMatrices().push();
+                drawContext.getMatrices().pushMatrix();
                 try {
-                    drawContext.getMatrices().translate(0, 0, 290);
                     if (config.itemMarker.itemSlotMarker.showFishRarityMarker) {
                         drawContext.drawGuiTexture(RenderLayer::getGuiTextured, rarityMarker, x, y, 16, 16,
                                 alpha | rarity.COLOR);
@@ -75,19 +74,18 @@ public class ItemMarkerHandler {
                                 alpha | size.COLOR);
                     }
                 } finally {
-                    drawContext.getMatrices().pop();
+                    drawContext.getMatrices().popMatrix();
                 }
             }
         } else if (config.itemMarker.itemSlotMarker.showOtherRarityMarker
                 && rarity != Constant.DEFAULT) {
             int alpha = ((int) 255f << 24);
-            drawContext.getMatrices().push();
+            drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.getMatrices().translate(0, 0, 290);
                 drawContext.drawGuiTexture(RenderLayer::getGuiTextured, rarityMarker, x, y, 16, 16,
                         alpha | rarity.COLOR);
             } finally {
-                drawContext.getMatrices().pop();
+                drawContext.getMatrices().popMatrix();
             }
         }
 
@@ -96,13 +94,12 @@ public class ItemMarkerHandler {
             boolean[] pet = FOMCItem.isPet(itemStack);
             if (pet[0] && (pet[1] || pet[2] || pet[3])) {
                 int alpha = ((int) 255f << 24);
-                drawContext.getMatrices().push();
+                drawContext.getMatrices().pushMatrix();
                 try {
-                    drawContext.getMatrices().translate(0, 0, 290);
                     drawContext.drawGuiTexture(RenderLayer::getGuiTextured, petItemMarker, x, y, 16, 16,
                             alpha | 0xFFFFFF);
                 } finally {
-                    drawContext.getMatrices().pop();
+                    drawContext.getMatrices().popMatrix();
                 }
             }
         }
@@ -113,9 +110,8 @@ public class ItemMarkerHandler {
                 Constant constant = Pet.getConstantFromPercent(pet.percentPetRating);
 
                 int alpha = ((int) 255f << 24);
-                drawContext.getMatrices().push();
+                drawContext.getMatrices().pushMatrix();
                 try {
-                    drawContext.getMatrices().translate(0, 0, 290);
 
                     if (config.itemMarker.itemSlotMarker.showPetPercentMarker == PetPercentMarkerToggle.CHARACTER) {
                         Text constChar = Text.literal(constant.TAG.getString().substring(0, 1))
@@ -128,7 +124,7 @@ public class ItemMarkerHandler {
                                 alpha | constant.COLOR);
                     }
                 } finally {
-                    drawContext.getMatrices().pop();
+                    drawContext.getMatrices().popMatrix();
                 }
             }
         }
@@ -137,9 +133,8 @@ public class ItemMarkerHandler {
         if (config.itemMarker.itemSlotMarker.showMaxPetStatsMarker) {
             Pet pet = Pet.getPet(itemStack);
             if (pet != null) {
-                drawContext.getMatrices().push();
+                drawContext.getMatrices().pushMatrix();
                 try {
-                    drawContext.getMatrices().translate(0, 0, 290);
                     
                     int iconSize = 7;
                     int iconY = y + 16 - iconSize; // bottom left corner
@@ -156,7 +151,7 @@ public class ItemMarkerHandler {
                         drawContext.drawGuiTexture(RenderLayer::getGuiTextured, maxScaleMarker, iconX, iconY, iconSize, iconSize);
                     }
                 } finally {
-                    drawContext.getMatrices().pop();
+                    drawContext.getMatrices().popMatrix();
                 }
             }
         }
@@ -169,13 +164,12 @@ public class ItemMarkerHandler {
                 && itemStack.equals(MinecraftClient.getInstance().player.getInventory()
                         .getStack(ProfileDataHandler.instance().profileData.equippedPetSlot))) {
             int alpha = ((int) 175f << 24);
-            drawContext.getMatrices().push();
+            drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.getMatrices().translate(0, 0, 100);
                 drawContext.drawGuiTexture(RenderLayer::getGuiTextured, selectedSlotMarker, x, y, 16, 16,
                         alpha | config.itemMarker.selectedPetHighlightColor);
             } finally {
-                drawContext.getMatrices().pop();
+                drawContext.getMatrices().popMatrix();
             }
         }
 
@@ -213,13 +207,12 @@ public class ItemMarkerHandler {
             if (isMatch) {
                 int alphaInt = (int) (0.6f * 255f) << 24;
 
-                drawContext.getMatrices().push();
+                drawContext.getMatrices().pushMatrix();
                 try {
-                    drawContext.getMatrices().translate(0, 0, 100);
                     drawContext.fill(x, y, x + 16, y + 16,
                             alphaInt | config.itemMarker.itemSearchMarker.searchHighlightColor);
                 } finally {
-                    drawContext.getMatrices().pop();
+                    drawContext.getMatrices().popMatrix();
                 }
             }
         }
@@ -237,13 +230,12 @@ public class ItemMarkerHandler {
                 && itemStack.equals(MinecraftClient.getInstance().player.getInventory()
                         .getStack(ProfileDataHandler.instance().profileData.equippedPetSlot))) {
             int alpha = ((int) (0.6f * 255f) << 24);
-            drawContext.getMatrices().push();
+            drawContext.getMatrices().pushMatrix();
             try {
-                drawContext.getMatrices().translate(0, 0, 100);
                 drawContext.drawGuiTexture(RenderLayer::getGuiTextured, selectedSlotMarker, x, y, 16, 16,
                         alpha | config.itemMarker.selectedPetHighlightColor);
             } finally {
-                drawContext.getMatrices().pop();
+                drawContext.getMatrices().popMatrix();
             }
         }
     }

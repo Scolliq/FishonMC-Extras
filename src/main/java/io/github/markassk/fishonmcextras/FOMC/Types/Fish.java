@@ -42,34 +42,34 @@ public class Fish extends FOMCItem {
     public final String rodName; // rod
 
     private Fish(NbtCompound nbtCompound, String type, CustomModelDataComponent customModelData, String name) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
-        this.id = UUIDHelper.getUUID(nbtCompound.getIntArray("id"));
+        super(type, Constant.valueOfId(nbtCompound.getString("rarity", "")));
+        this.id = UUIDHelper.getUUID(nbtCompound.getIntArray("id").orElse(new int[0]));
         this.customModelData = customModelData;
-        this.fishId = nbtCompound.getString("fish");
-        this.scientific = nbtCompound.getString("scientific");
-        String variantString = nbtCompound.getString("variant");
+        this.fishId = nbtCompound.getString("fish", "");
+        this.scientific = nbtCompound.getString("scientific", "");
+        String variantString = nbtCompound.getString("variant", "");
         this.variant = Constant.valueOfId(variantString);
         if (!variantString.isEmpty() && this.variant == Constant.DEFAULT && !variantString.equals("normal")) {
             FishOnMCExtras.LOGGER.warn("[FoE] Unknown variant string: '{}' for fish: {}", variantString, this.fishId);
         }
-        this.value = nbtCompound.getFloat("value");
-        this.xp = nbtCompound.getFloat("xp");
-        this.natureId = nbtCompound.getString("nature");
-        this.location = Constant.valueOfId(nbtCompound.getString("location"));
-        this.size = Constant.valueOfId(nbtCompound.getString("size"));
-        this.sex = nbtCompound.getString("sex");
-        this.weight = nbtCompound.getFloat("weight");
-        this.length = nbtCompound.getFloat("length");
-        this.groupId = nbtCompound.getString("group");
-        this.lifestyleId = nbtCompound.getString("lifestyle");
-        this.ecosystem = nbtCompound.getString("native");
-        this.migrationId = nbtCompound.getString("migration");
+        this.value = nbtCompound.getFloat("value", 0f);
+        this.xp = nbtCompound.getFloat("xp", 0f);
+        this.natureId = nbtCompound.getString("nature", "");
+        this.location = Constant.valueOfId(nbtCompound.getString("location", ""));
+        this.size = Constant.valueOfId(nbtCompound.getString("size", ""));
+        this.sex = nbtCompound.getString("sex", "");
+        this.weight = nbtCompound.getFloat("weight", 0f);
+        this.length = nbtCompound.getFloat("length", 0f);
+        this.groupId = nbtCompound.getString("group", "");
+        this.lifestyleId = nbtCompound.getString("lifestyle", "");
+        this.ecosystem = nbtCompound.getString("native", "");
+        this.migrationId = nbtCompound.getString("migration", "");
         this.catcherName = name;
-        this.catcher = UUIDHelper.getUUID(nbtCompound.getIntArray("catcher"));
+        this.catcher = UUIDHelper.getUUID(nbtCompound.getIntArray("catcher").orElse(new int[0]));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        this.date = LocalDate.parse(nbtCompound.getString("date"), formatter);
-        this.rodName = nbtCompound.getString("rod");
+        this.date = LocalDate.parse(nbtCompound.getString("date", ""), formatter);
+        this.rodName = nbtCompound.getString("rod", "");
     }
 
     public static Fish getFish(ItemStack itemStack, String type, String name) {
@@ -79,7 +79,7 @@ public class Fish extends FOMCItem {
     public static Fish getFish(ItemStack itemStack) {
         if(itemStack.get(DataComponentTypes.LORE) != null
                 && itemStack.get(DataComponentTypes.CUSTOM_DATA) != null
-                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem")) {
+                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem", false)) {
             if (itemStack.getItem() == Items.COD
                     || itemStack.getItem() == Items.WHITE_DYE
                     || itemStack.getItem() == Items.BLACK_DYE
@@ -100,7 +100,7 @@ public class Fish extends FOMCItem {
         if(itemStack.get(DataComponentTypes.CUSTOM_DATA) != null) {
             NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
             if(nbtCompound != null) {
-                return Constant.valueOfId(nbtCompound.getString("size"));
+                return Constant.valueOfId(nbtCompound.getString("size", ""));
             }
         }
         return Constant.DEFAULT;

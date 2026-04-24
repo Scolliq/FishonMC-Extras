@@ -7,7 +7,6 @@ import io.github.markassk.fishonmcextras.util.UUIDHelper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.text.Text;
 
@@ -41,22 +40,22 @@ public class Pet extends FOMCItem {
     public final String petItem;
 
     private Pet(NbtCompound nbtCompound, String type) {
-        super(type, Constant.valueOfId(nbtCompound.getString("rarity")));
-        this.id = UUIDHelper.getUUID(nbtCompound.getIntArray("id"));
-        this.pet = Constant.valueOfId(nbtCompound.getString("pet"));
-        this.climate = ClimateConstant.valueOfId(nbtCompound.getString("climate"));
-        this.location = Constant.valueOfId(nbtCompound.getString("location"));
-        this.lvl = nbtCompound.getInt("level");
-        this.currentXp = nbtCompound.getFloat("xp_cur");
-        this.neededXp = nbtCompound.getFloat("xp_need");
+        super(type, Constant.valueOfId(nbtCompound.getString("rarity", "")));
+        this.id = UUIDHelper.getUUID(nbtCompound.getIntArray("id").orElse(new int[0]));
+        this.pet = Constant.valueOfId(nbtCompound.getString("pet", ""));
+        this.climate = ClimateConstant.valueOfId(nbtCompound.getString("climate", ""));
+        this.location = Constant.valueOfId(nbtCompound.getString("location", ""));
+        this.lvl = nbtCompound.getInt("level", 0);
+        this.currentXp = nbtCompound.getFloat("xp_cur", 0f);
+        this.neededXp = nbtCompound.getFloat("xp_need", 0f);
         this.climateStat = new Stat(nbtCompound, Constant.CLIMATE_BASE);
         this.locationStat = new Stat(nbtCompound, Constant.LOCATION_BASE);
         this.percentPetRating = getPercentPetRating(this.climateStat.percentLuck, this.climateStat.percentScale,
                 this.locationStat.percentLuck, this.locationStat.percentScale);
-        this.discovererName = nbtCompound.getString("username");
-        this.discoverer = UUIDHelper.getUUID(nbtCompound.getIntArray("uuid"));
+        this.discovererName = nbtCompound.getString("username", "");
+        this.discoverer = UUIDHelper.getUUID(nbtCompound.getIntArray("uuid").orElse(new int[0]));
 
-        this.date = nbtCompound.getString("date");
+        this.date = nbtCompound.getString("date", "");
 
         this.petItem = readPetItem(nbtCompound);
     }
@@ -114,34 +113,28 @@ public class Pet extends FOMCItem {
         private Stat(NbtCompound nbtCompound, Constant base) {
             switch (base) {
                 case Constant.CLIMATE_BASE -> {
-                    this.id = nbtCompound.getString("climate");
-                    this.currentLuck = nbtCompound.getList("cbase", NbtElement.COMPOUND_TYPE).getCompound(0)
-                            .getInt("cur");
-                    this.currentScale = nbtCompound.getList("cbase", NbtElement.COMPOUND_TYPE).getCompound(1)
-                            .getInt("cur");
-                    this.maxLuck = nbtCompound.getList("cbase", NbtElement.COMPOUND_TYPE).getCompound(0)
-                            .getInt("cur_max");
-                    this.maxScale = nbtCompound.getList("cbase", NbtElement.COMPOUND_TYPE).getCompound(1)
-                            .getInt("cur_max");
-                    this.percentLuck = nbtCompound.getList("cbase", NbtElement.COMPOUND_TYPE).getCompound(0)
-                            .getFloat("percent_max");
-                    this.percentScale = nbtCompound.getList("cbase", NbtElement.COMPOUND_TYPE).getCompound(1)
-                            .getFloat("percent_max");
+                    this.id = nbtCompound.getString("climate", "");
+                    NbtList cbase = nbtCompound.getListOrEmpty("cbase");
+                    NbtCompound cbase0 = cbase.getCompound(0).orElse(new NbtCompound());
+                    NbtCompound cbase1 = cbase.getCompound(1).orElse(new NbtCompound());
+                    this.currentLuck = cbase0.getInt("cur", 0);
+                    this.currentScale = cbase1.getInt("cur", 0);
+                    this.maxLuck = cbase0.getInt("cur_max", 0);
+                    this.maxScale = cbase1.getInt("cur_max", 0);
+                    this.percentLuck = cbase0.getFloat("percent_max", 0f);
+                    this.percentScale = cbase1.getFloat("percent_max", 0f);
                 }
                 case Constant.LOCATION_BASE -> {
-                    this.id = nbtCompound.getString("location");
-                    this.currentLuck = nbtCompound.getList("lbase", NbtElement.COMPOUND_TYPE).getCompound(0)
-                            .getInt("cur");
-                    this.currentScale = nbtCompound.getList("lbase", NbtElement.COMPOUND_TYPE).getCompound(1)
-                            .getInt("cur");
-                    this.maxLuck = nbtCompound.getList("lbase", NbtElement.COMPOUND_TYPE).getCompound(0)
-                            .getInt("cur_max");
-                    this.maxScale = nbtCompound.getList("lbase", NbtElement.COMPOUND_TYPE).getCompound(1)
-                            .getInt("cur_max");
-                    this.percentLuck = nbtCompound.getList("lbase", NbtElement.COMPOUND_TYPE).getCompound(0)
-                            .getFloat("percent_max");
-                    this.percentScale = nbtCompound.getList("lbase", NbtElement.COMPOUND_TYPE).getCompound(1)
-                            .getFloat("percent_max");
+                    this.id = nbtCompound.getString("location", "");
+                    NbtList lbase = nbtCompound.getListOrEmpty("lbase");
+                    NbtCompound lbase0 = lbase.getCompound(0).orElse(new NbtCompound());
+                    NbtCompound lbase1 = lbase.getCompound(1).orElse(new NbtCompound());
+                    this.currentLuck = lbase0.getInt("cur", 0);
+                    this.currentScale = lbase1.getInt("cur", 0);
+                    this.maxLuck = lbase0.getInt("cur_max", 0);
+                    this.maxScale = lbase1.getInt("cur_max", 0);
+                    this.percentLuck = lbase0.getFloat("percent_max", 0f);
+                    this.percentScale = lbase1.getFloat("percent_max", 0f);
                 }
                 default -> {
                     this.id = Defaults.EMPTY_STRING;
@@ -239,10 +232,10 @@ public class Pet extends FOMCItem {
     public static Pet getPet(ItemStack itemStack) {
         if (itemStack.get(DataComponentTypes.LORE) != null
                 && itemStack.get(DataComponentTypes.CUSTOM_DATA) != null
-                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem")) {
+                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("shopitem", false)) {
             NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
             if (nbtCompound != null && nbtCompound.contains("type")
-                    && Objects.equals(nbtCompound.getString("type"), Defaults.ItemTypes.PET)) {
+                    && Objects.equals(nbtCompound.getString("type", ""), Defaults.ItemTypes.PET)) {
                 return Pet.getPet(itemStack, Defaults.ItemTypes.PET);
             }
         }
@@ -252,7 +245,7 @@ public class Pet extends FOMCItem {
     public static String getPetItem(ItemStack itemStack) {
         if (itemStack.get(DataComponentTypes.LORE) != null
                 && itemStack.get(DataComponentTypes.CUSTOM_DATA) != null
-                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("item")) {
+                && !Objects.requireNonNull(ItemStackHelper.getNbt(itemStack)).getBoolean("item", false)) {
             NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
             return readPetItem(nbtCompound);
         }
@@ -263,14 +256,14 @@ public class Pet extends FOMCItem {
         if (nbtCompound == null) {
             return null;
         }
-        NbtList items = nbtCompound.getList("item", NbtElement.COMPOUND_TYPE);
+        NbtList items = nbtCompound.getListOrEmpty("item");
         if (items.isEmpty()) {
             return null;
         }
-        NbtCompound item = items.getCompound(0);
+        NbtCompound item = items.getCompound(0).orElse(new NbtCompound());
         return item
-                .getCompound("components")
-                .getCompound("minecraft:custom_data")
-                .getString("petItem");
+                .getCompound("components").orElse(new NbtCompound())
+                .getCompound("minecraft:custom_data").orElse(new NbtCompound())
+                .getString("petItem", "");
     }
 }

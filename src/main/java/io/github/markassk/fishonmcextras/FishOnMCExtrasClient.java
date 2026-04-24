@@ -2,6 +2,7 @@ package io.github.markassk.fishonmcextras;
 
 import io.github.markassk.fishonmcextras.commands.CommandRegistry;
 import io.github.markassk.fishonmcextras.handler.*;
+import io.github.markassk.fishonmcextras.handler.SessionHandler;
 import io.github.markassk.fishonmcextras.handler.packet.PacketHandler;
 import io.github.markassk.fishonmcextras.screens.hud.MainHudRenderer;
 import io.github.markassk.fishonmcextras.screens.main.FoETitleScreen;
@@ -16,7 +17,8 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.MinecraftClient;
@@ -65,7 +67,7 @@ public class FishOnMCExtrasClient implements ClientModInitializer {
         ScreenEvents.AFTER_INIT.register(this::afterScreenInit);
         ClientEntityEvents.ENTITY_LOAD.register(this::onEntityLoad);
 
-        HudRenderCallback.EVENT.register(MAIN_HUD_RENDERER);
+        HudElementRegistry.addLast(Identifier.of("fishonmcextras", "main_hud"), MAIN_HUD_RENDERER);
     }
 
     private void onEntityLoad(Entity entity, ClientWorld clientWorld) {
@@ -131,6 +133,7 @@ public class FishOnMCExtrasClient implements ClientModInitializer {
                         BaitSortingHelperHandler.instance().loadFromProfile();
                         FishCatchHandler.instance().onJoinServer();
                         CrewHandler.instance().onJoinServer();
+                        SessionHandler.instance().onJoinServer();
                         DiscordHandler.instance().connect();
                         LoadingHandler.instance().isOnServer = true;
                         LoadingHandler.instance().wasOnServer = true;

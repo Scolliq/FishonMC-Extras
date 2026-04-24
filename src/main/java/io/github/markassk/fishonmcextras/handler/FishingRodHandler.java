@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.ModelTransformationMode;
+import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -226,7 +226,7 @@ public class FishingRodHandler {
                 itemDisplayEntity.setItemStack(baitStack);
                 itemDisplayEntity.setPosition(entity.getPos().add(0, -0.32, 0));
                 itemDisplayEntity.setBillboardMode(DisplayEntity.BillboardMode.VERTICAL);
-                itemDisplayEntity.setTransformationMode(ModelTransformationMode.GROUND);
+                itemDisplayEntity.setTransformationMode(ItemDisplayContext.GROUND);
                 itemDisplayEntity.setTransformation(new AffineTransformation(null, null, new Vector3f(0.75f, 0.75f, 0.75f), null));
             }
         }
