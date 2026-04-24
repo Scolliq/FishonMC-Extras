@@ -7,6 +7,7 @@ import io.github.markassk.fishonmcextras.mixin.HandledScreenAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.screen.slot.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,7 +28,7 @@ public abstract class HandledScreenMixin {
     }
 
     @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/ingame/HandledScreen;close()V"), cancellable = true)
-    private void injectKeypressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
+    private void injectKeypressed(KeyInput input, CallbackInfoReturnable<Boolean> cir) {
         if (SearchBarContainerHandler.instance().searchBar != null
                 && SearchBarContainerHandler.instance().searchBar.isFocused()) {
             cir.setReturnValue(true);

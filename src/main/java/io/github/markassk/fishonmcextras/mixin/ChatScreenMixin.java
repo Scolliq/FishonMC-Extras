@@ -4,6 +4,7 @@ import io.github.markassk.fishonmcextras.handler.ChatTagHandler;
 
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.input.KeyInput;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -105,7 +106,7 @@ public abstract class ChatScreenMixin {
         chatField.setSuggestion(remaining);
     }
     @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
-    private void keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
+    private void keyPressed(KeyInput input, CallbackInfoReturnable<Boolean> cir) {
         if (chatField == null) {
             return;
         }
@@ -114,6 +115,7 @@ public abstract class ChatScreenMixin {
             return;
         }
 
+        int keyCode = input.key();
         if (keyCode == GLFW.GLFW_KEY_UP) {
             selectedSuggestionIndex = Math.max(0, selectedSuggestionIndex - 1);
             updateGhostSuggestion(chatField.getText(), chatField.getCursor());
@@ -187,8 +189,6 @@ public abstract class ChatScreenMixin {
 
         context.getMatrices().pushMatrix();
         try {
-            context.getMatrices().translate(0, 0);
-
             context.fill(x, y, x + boxW, y + boxH, 0xCC000000);
             // context.drawStrokedRectangle(x, y, boxW, boxH, 0xFFFFAA00);
 
