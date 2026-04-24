@@ -24,9 +24,9 @@ public class ClientGlowMixin {
                 && LoadingHandler.instance().isOnServer
                 && self.getWorld().isClient
                 && self instanceof PlayerEntity otherPlayer
-                && Objects.equals(otherPlayer.getUuid(), OtherPlayerHandler.instance().highlightedPlayer.getProfile().getId())
+                && Objects.equals(otherPlayer.getUuid(), OtherPlayerHandler.instance().highlightedPlayer.getProfile().id())
         ) {
-            if(MinecraftClient.getInstance().player != null && MinecraftClient.getInstance().player.getPos().distanceTo(otherPlayer.getPos()) < 3d) {
+            if(MinecraftClient.getInstance().player != null && MinecraftClient.getInstance().player.getEntityPos().distanceTo(otherPlayer.getEntityPos()) < 3d) {
                 OtherPlayerHandler.instance().isHighlighted = false;
                 OtherPlayerHandler.instance().highlightedPlayer = null;
                 MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(TextHelper.concat(

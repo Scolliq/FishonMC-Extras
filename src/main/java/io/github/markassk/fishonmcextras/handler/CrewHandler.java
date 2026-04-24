@@ -96,7 +96,7 @@ public class CrewHandler {
                 && ProfileDataHandler.instance().profileData.crewMembers.stream().anyMatch(uuid -> uuid.equals(crewMember.getUuid()))
                 && !crewMember.getUuid().equals(minecraftClient.player.getUuid())
         ) {
-            if (crewMember.getPos().distanceTo(minecraftClient.player.getPos()) < 10) {
+            if (crewMember.getEntityPos().distanceTo(minecraftClient.player.getEntityPos()) < 10) {
                 isNearby.set(true);
             }
             foundCrew.set(true);

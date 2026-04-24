@@ -24,7 +24,7 @@ public class LocationHandler {
             }
 
             // Check Side Location
-            Constant sideLocation = findSideLocation((int) minecraftClient.player.getPos().x, (int) minecraftClient.player.getPos().z);
+            Constant sideLocation = findSideLocation((int) minecraftClient.player.getEntityPos().x, (int) minecraftClient.player.getEntityPos().z);
             if(sideLocation != Constant.UNKNOWN) {
                 return sideLocation;
             }

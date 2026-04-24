@@ -26,7 +26,7 @@ public class PlayerListHudMixin {
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/PlayerListHud;getPlayerName(Lnet/minecraft/client/network/PlayerListEntry;)Lnet/minecraft/text/Text;"))
     private Text injectRender(PlayerListHud instance, PlayerListEntry entry) {
-        String playerUuid = entry.getProfile().getId().toString();
+        String playerUuid = entry.getProfile().id().toString();
         Defaults.FoEDevType devType = Defaults.foeDevs.get(playerUuid);
 
         MutableText text;
@@ -42,11 +42,11 @@ public class PlayerListHudMixin {
             text = instance.getPlayerName(entry).copy();
         }
 
-        if (config.friendTracker.showFriendTag && LoadingHandler.instance().isOnServer && ProfileDataHandler.instance().profileData.friends.contains(entry.getProfile().getId())) {
+        if (config.friendTracker.showFriendTag && LoadingHandler.instance().isOnServer && ProfileDataHandler.instance().profileData.friends.contains(entry.getProfile().id())) {
             text = config.friendTracker.isPrefix ? Text.literal("\uE00C ").append(text) : text.append(Text.literal(" \uE00C").formatted(Formatting.WHITE));
         } 
 
-        if(config.crewTracker.showCrewTag && LoadingHandler.instance().isOnServer && ProfileDataHandler.instance().profileData.crewMembers.contains(entry.getProfile().getId())) {
+        if(config.crewTracker.showCrewTag && LoadingHandler.instance().isOnServer && ProfileDataHandler.instance().profileData.crewMembers.contains(entry.getProfile().id())) {
             return config.crewTracker.isPrefix ? Text.literal("\uE00A ").append(text) : text.append(Text.literal(" \uE00A").formatted(Formatting.WHITE));
         } else {
             return text;

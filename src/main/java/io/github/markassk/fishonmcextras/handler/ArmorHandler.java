@@ -119,7 +119,7 @@ public class ArmorHandler {
                 int offsetSlot = 0;
 
                 NbtCompound nbtCompound = ItemStackHelper.getNbt(itemStack);
-                if (nbtCompound != null && nbtCompound.contains("renderInfo", NbtElement.LIST_TYPE)) {
+                if (nbtCompound != null && nbtCompound.contains("renderInfo")) {
                     offsetSlot = 7;
                 }
 

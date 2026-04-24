@@ -54,8 +54,8 @@ public class ContainerButtonWidget extends ClickableWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
-        super.onClick(mouseX, mouseY);
+    public void onClick(net.minecraft.client.gui.Click click, boolean doubled) {
+        super.onClick(click, doubled);
         if(clickCallback != null) {
             this.clickCallback.onClick(this);
             this.setMessage(Text.literal("...").formatted(Formatting.GRAY));

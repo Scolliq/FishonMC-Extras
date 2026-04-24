@@ -40,7 +40,7 @@ public class PlayerStatusHandler {
                 Optional<AbstractClientPlayerEntity> player = minecraftClient.world.getPlayers().stream().filter(abstractClientPlayerEntity -> abstractClientPlayerEntity.getUuid().equals(uuid)).findFirst();
                 if(player.isPresent()) {
                     if(typingPlayers.get(uuid) == null) {
-                        typingPlayers.put(uuid, spawnTypeStatusDisplay(minecraftClient, player.get().getPos()));
+                        typingPlayers.put(uuid, spawnTypeStatusDisplay(minecraftClient, player.get().getEntityPos()));
                     }
                 } else {
                     if(textDisplayEntity != null) {
@@ -58,7 +58,7 @@ public class PlayerStatusHandler {
             textBubbles.forEach((uuid, textBubble) -> {
                 Optional<AbstractClientPlayerEntity> player = minecraftClient.world.getPlayers().stream().filter(abstractClientPlayerEntity -> abstractClientPlayerEntity.getUuid().equals(uuid)).findFirst();
                 if(player.isPresent() && System.currentTimeMillis() - textBubble.spawnTime < 10000L) {
-                    textBubble.bubble.setPosition(player.get().getPos().add(0, player.get().isSneaking() ? 2.8 : player.get().isInSwimmingPose() ? 1.9 : 3.1, 0));
+                    textBubble.bubble.setPosition(player.get().getEntityPos().add(0, player.get().isSneaking() ? 2.8 : player.get().isInSwimmingPose() ? 1.9 : 3.1, 0));
                 } else {
                     minecraftClient.world.removeEntity(textBubbles.get(uuid).bubble.getId(), Entity.RemovalReason.DISCARDED);
                     removeBubble.set(uuid);
@@ -84,13 +84,13 @@ public class PlayerStatusHandler {
 
     private void sendBubble(String textString, MutableText message) {
         String name = textString.substring(0, textString.indexOf("»"));
-        Optional<AbstractClientPlayerEntity> player = MinecraftClient.getInstance().world.getPlayers().stream().filter(abstractClientPlayerEntity -> !abstractClientPlayerEntity.getGameProfile().getName().isBlank() && name.contains(abstractClientPlayerEntity.getGameProfile().getName())).findFirst();
+        Optional<AbstractClientPlayerEntity> player = MinecraftClient.getInstance().world.getPlayers().stream().filter(abstractClientPlayerEntity -> !abstractClientPlayerEntity.getGameProfile().name().isBlank() && name.contains(abstractClientPlayerEntity.getGameProfile().name())).findFirst();
         player.ifPresent(abstractClientPlayerEntity -> {
             if(textBubbles.containsKey(abstractClientPlayerEntity.getUuid())) {
                 textBubbles.get(abstractClientPlayerEntity.getUuid()).spawnTime = System.currentTimeMillis();
                 textBubbles.get(abstractClientPlayerEntity.getUuid()).bubble.setText(message.append(Text.literal("\n⏷").formatted(Formatting.WHITE)));
             } else {
-                textBubbles.put(abstractClientPlayerEntity.getUuid(), new TextBubble(System.currentTimeMillis(), spawnMessageStatusDisplay(MinecraftClient.getInstance(), player.get().getPos(), message.append(Text.literal("\n⏷").formatted(Formatting.WHITE)))));
+                textBubbles.put(abstractClientPlayerEntity.getUuid(), new TextBubble(System.currentTimeMillis(), spawnMessageStatusDisplay(MinecraftClient.getInstance(), player.get().getEntityPos(), message.append(Text.literal("\n⏷").formatted(Formatting.WHITE)))));
             }
         });
     }

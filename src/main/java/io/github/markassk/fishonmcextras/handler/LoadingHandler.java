@@ -28,7 +28,7 @@ public class LoadingHandler {
 
     public void tick(MinecraftClient minecraftClient) {
         if(minecraftClient.player != null && !isLoadingDone) {
-            ItemStack stack = minecraftClient.player.getInventory().main.getFirst();
+            ItemStack stack = minecraftClient.player.getInventory().getMainStacks().getFirst();
             if(!stack.isEmpty() && stack.get(DataComponentTypes.CUSTOM_DATA) != null && stack.getItem() == Items.FISHING_ROD) {
                 isLoadingDone = true;
 

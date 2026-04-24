@@ -68,18 +68,18 @@ public class TabHandler {
                         PlayerListEntry player = differences.getFirst();
                         Text displayName = player.getDisplayName();
                         if (displayName != null
-                                && Defaults.foeDevs.containsKey(player.getProfile().getId().toString())) {
-                            Defaults.FoEDevType devType = Defaults.foeDevs.get(player.getProfile().getId().toString());
+                                && Defaults.foeDevs.containsKey(player.getProfile().id().toString())) {
+                            Defaults.FoEDevType devType = Defaults.foeDevs.get(player.getProfile().id().toString());
                             if (devType.usePurpleTag) {
                                 displayName = Constant.FOE_PURPLE.TAG.copy()
-                                        .append(Text.literal(" " + player.getProfile().getName()));
+                                        .append(Text.literal(" " + player.getProfile().name()));
                             } else {
                                 displayName = Constant.FOE.TAG.copy()
-                                        .append(Text.literal(" " + player.getProfile().getName()).withColor(0x00AF0E));
+                                        .append(Text.literal(" " + player.getProfile().name()).withColor(0x00AF0E));
                             }
                         }
                         if (ProfileDataHandler.instance().profileData.crewMembers
-                                .contains(player.getProfile().getId())) {
+                                .contains(player.getProfile().id())) {
                             minecraftClient.inGameHud.getChatHud().addMessage(TextHelper.concat(
                                     Text.literal("CREWS ").withColor(0x70aa6e).formatted(Formatting.BOLD),
                                     Text.literal("» ").withColor(0x545454),
@@ -99,18 +99,18 @@ public class TabHandler {
                         PlayerListEntry player = differences.getFirst();
                         Text displayName = player.getDisplayName();
                         if (displayName != null
-                                && Defaults.foeDevs.containsKey(player.getProfile().getId().toString())) {
-                            Defaults.FoEDevType devType = Defaults.foeDevs.get(player.getProfile().getId().toString());
+                                && Defaults.foeDevs.containsKey(player.getProfile().id().toString())) {
+                            Defaults.FoEDevType devType = Defaults.foeDevs.get(player.getProfile().id().toString());
                             if (devType.usePurpleTag) {
                                 displayName = Constant.FOE_PURPLE.TAG.copy()
-                                        .append(Text.literal(" " + player.getProfile().getName()));
+                                        .append(Text.literal(" " + player.getProfile().name()));
                             } else {
                                 displayName = Constant.FOE.TAG.copy()
-                                        .append(Text.literal(" " + player.getProfile().getName()).withColor(0x00AF0E));
+                                        .append(Text.literal(" " + player.getProfile().name()).withColor(0x00AF0E));
                             }
                         }
                         if (ProfileDataHandler.instance().profileData.crewMembers
-                                .contains(player.getProfile().getId())) {
+                                .contains(player.getProfile().id())) {
                             minecraftClient.inGameHud.getChatHud().addMessage(TextHelper.concat(
                                     Text.literal("CREWS ").withColor(0x70aa6e).formatted(Formatting.BOLD),
                                     Text.literal("» ").withColor(0x545454),
@@ -134,18 +134,18 @@ public class TabHandler {
                         PlayerListEntry player = differences.getFirst();
                         Text displayName = player.getDisplayName();
                         if (displayName != null
-                                && Defaults.foeDevs.containsKey(player.getProfile().getId().toString())) {
-                            Defaults.FoEDevType devType = Defaults.foeDevs.get(player.getProfile().getId().toString());
+                                && Defaults.foeDevs.containsKey(player.getProfile().id().toString())) {
+                            Defaults.FoEDevType devType = Defaults.foeDevs.get(player.getProfile().id().toString());
                             if (devType.usePurpleTag) {
                                 displayName = Constant.FOE_PURPLE.TAG.copy()
-                                        .append(Text.literal(" " + player.getProfile().getName()));
+                                        .append(Text.literal(" " + player.getProfile().name()));
                             } else {
                                 displayName = Constant.FOE.TAG.copy()
-                                        .append(Text.literal(" " + player.getProfile().getName()).withColor(0x00AF0E));
+                                        .append(Text.literal(" " + player.getProfile().name()).withColor(0x00AF0E));
                             }
                         }
                         if (ProfileDataHandler.instance().profileData.friends
-                                .contains(player.getProfile().getId())) {
+                                .contains(player.getProfile().id())) {
                             minecraftClient.inGameHud.getChatHud().addMessage(TextHelper.concat(
                                     Text.literal("FRIENDS ").withColor(0x70aa6e).formatted(Formatting.BOLD),
                                     Text.literal("» ").withColor(0x545454),
@@ -165,18 +165,18 @@ public class TabHandler {
                         PlayerListEntry player = differences.getFirst();
                         Text displayName = player.getDisplayName();
                         if (displayName != null
-                                && Defaults.foeDevs.containsKey(player.getProfile().getId().toString())) {
-                            Defaults.FoEDevType devType = Defaults.foeDevs.get(player.getProfile().getId().toString());
+                                && Defaults.foeDevs.containsKey(player.getProfile().id().toString())) {
+                            Defaults.FoEDevType devType = Defaults.foeDevs.get(player.getProfile().id().toString());
                             if (devType.usePurpleTag) {
                                 displayName = Constant.FOE_PURPLE.TAG.copy()
-                                        .append(Text.literal(" " + player.getProfile().getName()));
+                                        .append(Text.literal(" " + player.getProfile().name()));
                             } else {
                                 displayName = Constant.FOE.TAG.copy()
-                                        .append(Text.literal(" " + player.getProfile().getName()).withColor(0x00AF0E));
+                                        .append(Text.literal(" " + player.getProfile().name()).withColor(0x00AF0E));
                             }
                         }
                         if (ProfileDataHandler.instance().profileData.friends
-                                .contains(player.getProfile().getId())) {
+                                .contains(player.getProfile().id())) {
                             minecraftClient.inGameHud.getChatHud().addMessage(TextHelper.concat(
                                     Text.literal("FRIENDS ").withColor(0x70aa6e).formatted(Formatting.BOLD),
                                     Text.literal("» ").withColor(0x545454),
@@ -203,7 +203,7 @@ public class TabHandler {
         if (MinecraftClient.getInstance().getNetworkHandler() != null) {
             PlayerListEntry playerListEntry = MinecraftClient.getInstance().getNetworkHandler()
                     .getPlayerListEntry(uuid);
-            return playerListEntry != null ? playerListEntry.getProfile().getName() : null;
+            return playerListEntry != null ? playerListEntry.getProfile().name() : null;
         }
         return null;
     }

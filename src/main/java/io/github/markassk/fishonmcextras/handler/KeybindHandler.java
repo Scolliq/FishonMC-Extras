@@ -84,12 +84,12 @@ public class KeybindHandler {
 		});
 
 		if (minecraftClient.currentScreen != null) {
-			this.showExtraInfo = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
+			this.showExtraInfo = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow(),
 					((KeyBindingAccessor) openExtraInfoKeybind).getBoundKey().getCode());
 
 			boolean showOnlyWhilePressingKeybind = FishOnMCExtrasConfig
 					.getConfig().baitSortingHelperVisibility.showOnlyWhilePressingKeybind;
-			boolean isPressed = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
+			boolean isPressed = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow(),
 					((KeyBindingAccessor) baitSortingHelper).getBoundKey().getCode());
 
 			this.visualizeBaitSorting = showOnlyWhilePressingKeybind

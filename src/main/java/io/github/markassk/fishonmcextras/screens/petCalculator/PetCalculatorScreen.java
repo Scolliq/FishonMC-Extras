@@ -38,7 +38,7 @@ public class PetCalculatorScreen extends Screen {
         super.init();
 
         petListStack = new ArrayList<>();
-        this.player.getInventory().main.forEach(stack -> {
+        this.player.getInventory().getMainStacks().forEach(stack -> {
             Pet pet = Pet.getPet(stack);
             if(pet != null) {
                 this.petListStack.add(stack);

@@ -61,8 +61,8 @@ public class FishCatchHandler {
 			if (System.currentTimeMillis() - this.fishCaughtTime < 2000L) {
 				if (!this.isFull) {
 					int checkedStacks = 0;
-					for (int i = minecraftClient.player.getInventory().main.size() - 1; i >= 0; i--) {
-						ItemStack stack = minecraftClient.player.getInventory().main.get(i);
+					for (int i = minecraftClient.player.getInventory().getMainStacks().size() - 1; i >= 0; i--) {
+						ItemStack stack = minecraftClient.player.getInventory().getMainStacks().get(i);
 						if (stack.isEmpty()) {
 							continue;
 						}
@@ -285,8 +285,8 @@ public class FishCatchHandler {
 
 	private void updateTrackedFish(PlayerEntity player) {
 		trackFishList.clear();
-		for (int i = player.getInventory().main.size() - 1; i >= 0; i--) {
-			ItemStack stack = player.getInventory().main.get(i);
+		for (int i = player.getInventory().getMainStacks().size() - 1; i >= 0; i--) {
+			ItemStack stack = player.getInventory().getMainStacks().get(i);
 
 			if (stack.isEmpty()) {
 				continue;

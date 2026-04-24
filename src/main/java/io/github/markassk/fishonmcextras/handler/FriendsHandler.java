@@ -39,7 +39,7 @@ public class FriendsHandler {
                 && ProfileDataHandler.instance().profileData.friends.stream().anyMatch(uuid -> uuid.equals(friend.getUuid()))
                 && !friend.getUuid().equals(minecraftClient.player.getUuid())
         ) {
-            if (friend.getPos().distanceTo(minecraftClient.player.getPos()) < 10) {
+            if (friend.getEntityPos().distanceTo(minecraftClient.player.getEntityPos()) < 10) {
                 isNearby.set(true);
             }
             froundFriends.set(true);

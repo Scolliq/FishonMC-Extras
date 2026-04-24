@@ -88,8 +88,8 @@ public class IconButtonWidget extends ClickableWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
-        super.onClick(mouseX, mouseY);
+    public void onClick(net.minecraft.client.gui.Click click, boolean doubled) {
+        super.onClick(click, doubled);
         this.clickCallback.onClick(this);
         if(isLoader) this.text = Text.literal("Loading...").formatted(Formatting.GRAY);
     }

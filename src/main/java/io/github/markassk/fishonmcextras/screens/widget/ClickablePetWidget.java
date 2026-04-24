@@ -27,8 +27,8 @@ public class ClickablePetWidget extends ClickableItemWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
-        super.onClick(mouseX, mouseY);
+    public void onClick(net.minecraft.client.gui.Click click, boolean doubled) {
+        super.onClick(click, doubled);
         PetCalculatorHandler.instance().setIndex(this.list, this.index);
         PetCalculatorHandler.instance().setPet(this.pet, this.list);
     }

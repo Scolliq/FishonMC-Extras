@@ -43,18 +43,18 @@ public class TextWidget extends ClickableWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
-        super.onClick(mouseX, mouseY);
+    public void onClick(net.minecraft.client.gui.Click click, boolean doubled) {
+        super.onClick(click, doubled);
         if(clickCallback != null) {
             this.clickCallback.onClick(this);
         }
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(net.minecraft.client.gui.Click click, boolean doubled) {
         if(clickCallback != null) {
             this.clickCallback.onClick(this);
-            return super.mouseClicked(mouseX, mouseY, button);
+            return super.mouseClicked(click, doubled);
         }
         return false;
     }

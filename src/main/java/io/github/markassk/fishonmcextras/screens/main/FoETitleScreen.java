@@ -219,14 +219,14 @@ public class FoETitleScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(net.minecraft.client.input.KeyInput input) {
         if(client != null) {
-            if (super.keyPressed(keyCode, scanCode, modifiers)) {
+            if (super.keyPressed(input)) {
                 return true;
             }
 
             // Refresh bind
-            if (keyCode == GLFW.GLFW_KEY_F5) {
+            if (input.key() == GLFW.GLFW_KEY_F5) {
                 client.setScreen(new FoETitleScreen());
                 return true;
             }

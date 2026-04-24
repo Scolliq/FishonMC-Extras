@@ -94,19 +94,19 @@ public class MovableBoxWidget extends ClickableWidget {
     }
 
     @Override
-    protected void onDrag(double mouseX, double mouseY, double deltaX, double deltaY) {
-        super.onDrag(mouseX, mouseY, deltaX, deltaY);
+    protected void onDrag(net.minecraft.client.gui.Click click, double offsetX, double offsetY) {
+        super.onDrag(click, offsetX, offsetY);
 
-        this.deltaX += deltaX;
-        this.deltaY += deltaY;
+        this.deltaX += offsetX;
+        this.deltaY += offsetY;
 
         this.setX(Math.clamp(originalX + (int) this.deltaX, this.minWidth, this.maxWidth));
         this.setY(Math.clamp(originalY + (int) this.deltaY, this.minHeight, this.maxHeight));
     }
 
     @Override
-    public void onRelease(double mouseX, double mouseY) {
-        super.onRelease(mouseX, mouseY);
+    public void onRelease(net.minecraft.client.gui.Click click) {
+        super.onRelease(click);
         this.originalX = getX();
         this.originalY = getY();
         this.deltaX = 0;

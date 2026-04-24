@@ -62,10 +62,10 @@ public class FishingRodHandler {
     }
 
     public void tick(MinecraftClient minecraftClient) {
-        if(minecraftClient.player != null && minecraftClient.player.getInventory().main.getFirst().getItem() == Items.FISHING_ROD) {
-            if(this.fishingRodStack == null || !this.fishingRodStack.equals(minecraftClient.player.getInventory().main.getFirst())) {
-                this.fishingRodStack = minecraftClient.player.getInventory().main.getFirst();
-                FishingRod fishingRod = FishingRod.getFishingRod(minecraftClient.player.getInventory().main.getFirst());
+        if(minecraftClient.player != null && minecraftClient.player.getInventory().getMainStacks().getFirst().getItem() == Items.FISHING_ROD) {
+            if(this.fishingRodStack == null || !this.fishingRodStack.equals(minecraftClient.player.getInventory().getMainStacks().getFirst())) {
+                this.fishingRodStack = minecraftClient.player.getInventory().getMainStacks().getFirst();
+                FishingRod fishingRod = FishingRod.getFishingRod(minecraftClient.player.getInventory().getMainStacks().getFirst());
                 if(fishingRod != null) {
                     this.fishingRod = fishingRod;
                 }
@@ -119,7 +119,7 @@ public class FishingRodHandler {
                 Entity bobberEntity = minecraftClient.world.getEntityById(entity);
                 if(bobberEntity != null) {
                     Entity baitEntity = minecraftClient.world.getEntityById(bait);
-                    if (baitEntity != null) baitEntity.setPosition(bobberEntity.getPos().add(0, -0.32, 0));
+                    if (baitEntity != null) baitEntity.setPosition(bobberEntity.getEntityPos().add(0, -0.32, 0));
                 } else {
                     entityToRemove.add(entity);
                 }
@@ -137,7 +137,7 @@ public class FishingRodHandler {
         if (client.player == null) return false;
         ItemStack rodStack = fishingRodStack;
         if (rodStack == null || rodStack.isEmpty()) {
-            rodStack = client.player.getInventory().main.stream()
+            rodStack = client.player.getInventory().getMainStacks().stream()
                     .filter(stack -> !stack.isEmpty() && stack.getItem() == Items.FISHING_ROD && FishingRod.getFishingRod(stack) != null)
                     .findFirst()
                     .orElse(null);
@@ -224,7 +224,7 @@ public class FishingRodHandler {
                         bait.customModelData : rod.tacklebox.getFirst() instanceof Lure lure ? lure.customModelData : CustomModelDataComponent.DEFAULT);
 
                 itemDisplayEntity.setItemStack(baitStack);
-                itemDisplayEntity.setPosition(entity.getPos().add(0, -0.32, 0));
+                itemDisplayEntity.setPosition(entity.getEntityPos().add(0, -0.32, 0));
                 itemDisplayEntity.setBillboardMode(DisplayEntity.BillboardMode.VERTICAL);
                 itemDisplayEntity.setTransformationMode(ItemDisplayContext.GROUND);
                 itemDisplayEntity.setTransformation(new AffineTransformation(null, null, new Vector3f(0.75f, 0.75f, 0.75f), null));
@@ -247,10 +247,10 @@ public class FishingRodHandler {
     }
 
     private void spawnLight(MinecraftClient minecraftClient, FishingBobberEntity fishingBobberEntity) {
-        if(fishingBobberEntity != null && minecraftClient.world != null && !Objects.equals(this.previousPos, BlockPos.ofFloored(fishingBobberEntity.getPos().add(0, .40, 0)))) {
+        if(fishingBobberEntity != null && minecraftClient.world != null && !Objects.equals(this.previousPos, BlockPos.ofFloored(fishingBobberEntity.getEntityPos().add(0, .40, 0)))) {
             minecraftClient.world.setBlockState(this.previousPos, this.previousBlockState);
-            this.previousBlockState = minecraftClient.world.getBlockState(BlockPos.ofFloored(fishingBobberEntity.getPos().add(0, .40, 0)));
-            this.previousPos = BlockPos.ofFloored(fishingBobberEntity.getPos().add(0, .40, 0));
+            this.previousBlockState = minecraftClient.world.getBlockState(BlockPos.ofFloored(fishingBobberEntity.getEntityPos().add(0, .40, 0)));
+            this.previousPos = BlockPos.ofFloored(fishingBobberEntity.getEntityPos().add(0, .40, 0));
             if(minecraftClient.world.getBlockState(this.previousPos).getBlock() == Blocks.WATER) {
                 BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
                 IntProperty LEVEL_15 = Properties.LEVEL_15;
