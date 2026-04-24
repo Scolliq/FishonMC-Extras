@@ -2,7 +2,7 @@ package io.github.markassk.fishonmcextras.mixin;
 
 import io.github.markassk.fishonmcextras.config.FishOnMCExtrasConfig;
 import io.github.markassk.fishonmcextras.handler.LoadingHandler;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
@@ -20,8 +20,9 @@ public class ArmorFeatureRendererMixin<S extends BipedEntityRenderState, M exten
     @Unique
     private final FishOnMCExtrasConfig config = FishOnMCExtrasConfig.getConfig();
 
+    // 1.21.11: signature is (MatrixStack, OrderedRenderCommandQueue, ItemStack, EquipmentSlot, int, S state)
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
-    public void injectRenderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, EquipmentSlot slot, int light, A armorModel, CallbackInfo ci) {
+    public void injectRenderArmor(MatrixStack matrices, OrderedRenderCommandQueue queue, ItemStack stack, EquipmentSlot slot, int light, S state, CallbackInfo ci) {
         if((slot == EquipmentSlot.CHEST
                 || slot == EquipmentSlot.LEGS
                 || slot == EquipmentSlot.FEET)

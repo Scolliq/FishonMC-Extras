@@ -62,19 +62,9 @@ public class InGameHudMixin {
         }
     }
 
-    @Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
-    private void injectRenderExperienceBar(DrawContext context, int x, CallbackInfo ci) {
-        if(config.barHUD.showBar && LoadingHandler.instance().isOnServer) {
-            ci.cancel();
-        }
-    }
-
-    @Inject(method = "renderExperienceLevel", at = @At("HEAD"), cancellable = true)
-    private void injectRenderExperienceLevel(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if(config.barHUD.showBar && LoadingHandler.instance().isOnServer) {
-            ci.cancel();
-        }
-    }
+    // 1.21.11: renderExperienceBar/renderExperienceLevel no longer exist on
+    // InGameHud - the experience HUD was reorganized. The bar-hide feature
+    // (config.barHUD.showBar) needs a new injection target before it works again.
 
     @Inject(method = "setTitle", at = @At("HEAD"))
     private void injectSetTitle(Text title, CallbackInfo ci) {

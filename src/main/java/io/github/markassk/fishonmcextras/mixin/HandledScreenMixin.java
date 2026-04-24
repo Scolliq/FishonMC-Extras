@@ -21,7 +21,7 @@ public abstract class HandledScreenMixin {
     @Shadow public abstract void close();
 
     @Inject(method = "drawSlot", at = @At("TAIL"))
-    private void injectDrawSlot(DrawContext context, Slot slot, CallbackInfo ci) {
+    private void injectDrawSlot(DrawContext context, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
         if(LoadingHandler.instance().isOnServer) {
             ItemMarkerHandler.instance().renderItemMarker(context, slot);
         }
