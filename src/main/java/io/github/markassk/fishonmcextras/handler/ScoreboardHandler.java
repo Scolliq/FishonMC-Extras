@@ -40,7 +40,7 @@ public class ScoreboardHandler {
         try {
             List<Text> textList = new ArrayList<>();
 
-            Scoreboard scoreboard = Objects.requireNonNull(client.player).getScoreboard();
+            Scoreboard scoreboard = Objects.requireNonNull(client.player).getEntityWorld().getScoreboard();
             ScoreboardObjective objective = scoreboard.getObjectiveForSlot(ScoreboardDisplaySlot.SIDEBAR);
 
             if(objective != null) {

@@ -22,7 +22,7 @@ public class ClientGlowMixin {
         Entity self = (Entity)(Object)this;
         if (OtherPlayerHandler.instance().isHighlighted
                 && LoadingHandler.instance().isOnServer
-                && self.getWorld().isClient
+                && self.getEntityWorld().isClient()
                 && self instanceof PlayerEntity otherPlayer
                 && Objects.equals(otherPlayer.getUuid(), OtherPlayerHandler.instance().highlightedPlayer.getProfile().id())
         ) {

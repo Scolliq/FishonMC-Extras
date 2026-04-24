@@ -103,7 +103,12 @@ public class OtherPlayerHandler {
 
     private void spawnDisplayEntities(MinecraftClient minecraftClient, PlayerEntity targetedPlayer) {
         // Left Side
-        targetedPlayer.getArmorItems().forEach(itemStack -> {
+        for (net.minecraft.entity.EquipmentSlot slot : new net.minecraft.entity.EquipmentSlot[]{
+                net.minecraft.entity.EquipmentSlot.HEAD,
+                net.minecraft.entity.EquipmentSlot.CHEST,
+                net.minecraft.entity.EquipmentSlot.LEGS,
+                net.minecraft.entity.EquipmentSlot.FEET}) {
+            ItemStack itemStack = targetedPlayer.getEquippedStack(slot);
             if(FOMCItem.isFOMCItem(itemStack)) {
                 Armor armor = Armor.getArmor(itemStack);
                 if(armor != null) {
@@ -115,7 +120,7 @@ public class OtherPlayerHandler {
                         showItemStats(minecraftClient, targetedPlayer, itemStack, armor.rarity.TAG, 270, 3.2, DISTANCE);
                 }
             }
-        });
+        }
 
         // Right Side
         ItemStack mainhandStack = targetedPlayer.getMainHandStack().copy();
@@ -209,7 +214,7 @@ public class OtherPlayerHandler {
         itemDisplayEntity.setItemStack(itemStack);
         itemDisplayEntity.setPosition(VectorHelper.getPoint(minecraftClient.player.getEntityPos(), position, distance, angle).add(0, verticalOffset - index * lineHeight, 0));
         itemDisplayEntity.setBillboardMode(DisplayEntity.BillboardMode.VERTICAL);
-        itemDisplayEntity.setTransformationMode(modelTransformationMode);
+        // itemDisplayEntity.setTransformationMode(modelTransformationMode); // TODO 1.21.11: setTransformationMode is private; re-enable with NBT/mixin if needed
         itemDisplayEntity.setTransformation(new AffineTransformation(null, null, new Vector3f(scale, scale, scale), null));
     }
 

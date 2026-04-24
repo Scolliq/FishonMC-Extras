@@ -190,7 +190,7 @@ public abstract class ChatScreenMixin {
             context.getMatrices().translate(0, 0);
 
             context.fill(x, y, x + boxW, y + boxH, 0xCC000000);
-            // context.drawBorder(x, y, boxW, boxH, 0xFFFFAA00);
+            // context.drawStrokedRectangle(x, y, boxW, boxH, 0xFFFFAA00);
 
             int selectedRow = selected - windowStart;
             for (int i = 0; i < visibleCount; i++) {

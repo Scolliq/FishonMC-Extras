@@ -61,10 +61,10 @@ public class BaitHud {
                 // Draw Background
                 if(rightAlignment) {
                     drawContext.fill(scaledX + offset, scaledY - heightClampTranslation, scaledX + offset + padding * 2  + 4 + 16 + maxLength, scaledY - heightClampTranslation + 24, alphaInt);
-                    drawContext.drawBorder(scaledX + offset + 2, scaledY - heightClampTranslation + 2, 20, 20,  alphaInt | 0xFFFFFF);
+                    drawContext.drawStrokedRectangle(scaledX + offset + 2, scaledY - heightClampTranslation + 2, 20, 20,  alphaInt | 0xFFFFFF);
                 } else {
                     drawContext.fill(scaledX - offset - padding * 2 - 4 - 16 - maxLength, scaledY - heightClampTranslation, scaledX - offset, scaledY - heightClampTranslation + 24, alphaInt);
-                    drawContext.drawBorder(scaledX - offset - 2 - 20, scaledY - heightClampTranslation + 2, 20, 20,  alphaInt | 0xFFFFFF);
+                    drawContext.drawStrokedRectangle(scaledX - offset - 2 - 20, scaledY - heightClampTranslation + 2, 20, 20,  alphaInt | 0xFFFFFF);
                 }
 
                 // Draw Item

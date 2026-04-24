@@ -176,9 +176,9 @@ public class StatsImportHandler {
         AtomicBoolean isMe = new AtomicBoolean(false);
         for (int i = 0; i < Objects.requireNonNull(minecraftClient.player).currentScreenHandler.slots.size(); i++) {
             ItemStack itemStack = minecraftClient.player.currentScreenHandler.getSlot(i).getStack();
-            if (minecraftClient.player.currentScreenHandler.getSlot(i).inventory != minecraftClient.player.getInventory() && itemStack.getItem() == Items.PLAYER_HEAD && Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).id().isPresent()) {
+            if (minecraftClient.player.currentScreenHandler.getSlot(i).inventory != minecraftClient.player.getInventory() && itemStack.getItem() == Items.PLAYER_HEAD && Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).getGameProfile().id() != null) {
 
-                if(Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).id().get().equals(minecraftClient.player.getUuid())) {
+                if(Objects.requireNonNull(itemStack.get(DataComponentTypes.PROFILE)).getGameProfile().id().equals(minecraftClient.player.getUuid())) {
 
                     isMe.set(true);
                 }

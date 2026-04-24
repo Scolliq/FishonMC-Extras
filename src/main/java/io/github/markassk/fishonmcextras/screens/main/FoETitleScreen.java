@@ -80,7 +80,7 @@ public class FoETitleScreen extends Screen {
 
         Thread pingThread = new Thread(() -> {
             try {
-                pinger.add(serverInfo, () -> serverInfo.setStatus(ServerInfo.Status.SUCCESSFUL), () -> {});
+                pinger.add(serverInfo, () -> serverInfo.setStatus(ServerInfo.Status.SUCCESSFUL), () -> {}, net.minecraft.network.NetworkingBackend.remote(false));
             } catch (Exception e) {
                 serverInfo.setStatus(ServerInfo.Status.UNREACHABLE);
                 serverInfo.ping = -1L;
@@ -213,8 +213,6 @@ public class FoETitleScreen extends Screen {
             sw += missing * 1.77f;
         }
 
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
         context.drawTexture(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURE, 0, 0, 0, 0, sw, sh, sw, sh);
     }
 

@@ -85,13 +85,13 @@ public class BaitSortingHelperHandler {
         if (!data.contains("type")) {
             return false;
         }
-        return "bait".equalsIgnoreCase(data.getString("type"));
+        return "bait".equalsIgnoreCase(data.getString("type", ""));
     }
 
     private static String getBaitKey(ItemStack itemStack) {
         NbtCompound data = ItemStackHelper.getNbt(itemStack);
         if (data != null && data.contains("name")) {
-            String nbtName = data.getString("name");
+            String nbtName = data.getString("name", "");
             if (nbtName != null && !nbtName.isBlank()) {
                 return nbtName.toLowerCase();
             }

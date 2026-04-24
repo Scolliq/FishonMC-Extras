@@ -80,7 +80,7 @@ public class MovableBoxWidget extends ClickableWidget {
         context.getMatrices().pushMatrix();
         try {
             context.getMatrices().translate((rightAlignment ? getX() + width: getX()), getY());
-            context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rightAlignment ? 90.0F : -90.0F));
+            context.getMatrices().rotate((float) Math.toRadians(rightAlignment ? 90.0F : -90.0F));
             Text alignmentText = Text.literal(rightAlignment ? "ʀɪɢʜᴛ" : "ʟᴇꜰᴛ").formatted(Formatting.GRAY, Formatting.ITALIC);
             context.drawText(textRenderer, alignmentText, rightAlignment ? height / 2 - textRenderer.getWidth(alignmentText) / 2 : - height / 2 - textRenderer.getWidth(alignmentText) / 2, 0, 0xFFFFFF, true);
 

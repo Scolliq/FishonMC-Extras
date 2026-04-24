@@ -159,7 +159,7 @@ public class FishingRodHandler {
                 if(config.bobberTracker.skyLightWarning
                         && minecraftClient.world != null
                         && (inGameHudAccessor.getTitle() == null || !Objects.equals(inGameHudAccessor.getTitle().getString(), "BITE!"))
-                        && !fishingBobberEntity.getWorld().isSkyVisible(fishingBobberEntity.getBlockPos().up())
+                        && !fishingBobberEntity.getEntityWorld().isSkyVisible(fishingBobberEntity.getBlockPos().up())
                         && minecraftClient.world.getBlockState(fishingBobberEntity.getBlockPos().up()).getBlock() != Blocks.WATER
                         && remaining <= 0
                 ) this.addText(textList, Text.literal("ʙᴏʙʙᴇʀ ᴜɴᴅᴇʀ ᴀ ʙʟᴏᴄᴋ").formatted(Formatting.RED));
@@ -226,7 +226,7 @@ public class FishingRodHandler {
                 itemDisplayEntity.setItemStack(baitStack);
                 itemDisplayEntity.setPosition(entity.getEntityPos().add(0, -0.32, 0));
                 itemDisplayEntity.setBillboardMode(DisplayEntity.BillboardMode.VERTICAL);
-                itemDisplayEntity.setTransformationMode(ItemDisplayContext.GROUND);
+                // itemDisplayEntity.setTransformationMode(ItemDisplayContext.GROUND); // TODO 1.21.11: setTransformationMode is private; re-enable with NBT/mixin if needed
                 itemDisplayEntity.setTransformation(new AffineTransformation(null, null, new Vector3f(0.75f, 0.75f, 0.75f), null));
             }
         }

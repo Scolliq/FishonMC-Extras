@@ -16,7 +16,7 @@ public class LocationHandler {
     public Constant getLocation(MinecraftClient minecraftClient, String text, Constant currentLocation) {
         if(minecraftClient.player != null) {
             // Check Dimension
-            String dimensionName = minecraftClient.player.getWorld().getRegistryKey().getValue().toString();
+            String dimensionName = minecraftClient.player.getEntityWorld().getRegistryKey().getValue().toString();
             if (!dimensionName.isEmpty()) {
                 if (dimensionName.contains("crew")){
                     return Constant.CREW_ISLAND;

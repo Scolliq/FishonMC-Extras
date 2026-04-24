@@ -34,7 +34,7 @@ public class SearchBarKeyWordWidget extends TextFieldWidget {
                 int lines = hoverInfo.size() * lineHeight;
 
                 drawContext.fill(this.getX() + this.width / 2 - length / 2 - padding, this.getBottom(), this.getX() + this.width / 2 + length / 2 + padding, this.getBottom() + padding * 2 + lines,0xFF000000);
-                drawContext.drawBorder(this.getX() + this.width / 2 - length / 2 - padding, this.getBottom(), padding * 2 + length, padding * 2 + lines, 0xFFFFAA00);
+                drawContext.drawStrokedRectangle(this.getX() + this.width / 2 - length / 2 - padding, this.getBottom(), padding * 2 + length, padding * 2 + lines, 0xFFFFAA00);
 
                 AtomicInteger count = new AtomicInteger(0);
                 hoverInfo.forEach(text -> {
@@ -52,9 +52,9 @@ public class SearchBarKeyWordWidget extends TextFieldWidget {
                 drawContext.getMatrices().translate(0, 0);
                 int PADDING = 2;
                 if(this.isFocused()) {
-                    drawContext.drawBorder(this.getX(), this.getY(), this.width, this.height, 0xFFFFAA00);
+                    drawContext.drawStrokedRectangle(this.getX(), this.getY(), this.width, this.height, 0xFFFFAA00);
                 }
-                drawContext.drawBorder(this.getX() + PADDING, this.getY() + PADDING, this.width - PADDING * 2, this.height - PADDING * 2, 0xFFFFAA00);
+                drawContext.drawStrokedRectangle(this.getX() + PADDING, this.getY() + PADDING, this.width - PADDING * 2, this.height - PADDING * 2, 0xFFFFAA00);
             } finally {
                 drawContext.getMatrices().popMatrix();
             }

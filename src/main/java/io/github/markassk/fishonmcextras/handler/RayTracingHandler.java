@@ -76,7 +76,7 @@ public class RayTracingHandler {
             return false;
         }
 
-        if (target instanceof ProjectileEntity && !target.getWorld().getTickManager().isFrozen()) {
+        if (target instanceof ProjectileEntity && !target.getEntityWorld().getTickManager().isFrozen()) {
             return false;
         }
 

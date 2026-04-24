@@ -282,13 +282,8 @@ public class TextHelper {
         // Check if this text has a hover event
         if (text.getStyle() != null && text.getStyle().getHoverEvent() != null) {
             HoverEvent hoverEvent = text.getStyle().getHoverEvent();
-            // Check if it's a SHOW_TEXT action and extract the text
-            if (hoverEvent.getAction() == HoverEvent.Action.SHOW_TEXT) {
-                Object hoverValue = hoverEvent.getValue(HoverEvent.Action.SHOW_TEXT);
-                // In Minecraft 1.21.4, SHOW_TEXT value is directly a Text object
-                if (hoverValue instanceof Text hoverText) {
-                    hoverTexts.add(hoverText);
-                }
+            if (hoverEvent instanceof HoverEvent.ShowText showText) {
+                hoverTexts.add(showText.value());
             }
         }
 

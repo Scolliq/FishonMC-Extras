@@ -108,7 +108,7 @@ public class EquipmentHud {
             borderColor = (alpha & 0xFF000000) | (rarity.COLOR & 0x00FFFFFF);
         }
 
-        drawContext.drawBorder(x, y + 20, 20, 1, borderColor);
+        drawContext.drawStrokedRectangle(x, y + 20, 20, 1, borderColor);
 
         if(itemStack.getItem() != Items.AIR) {
             drawContext.drawItem(itemStack, x + 2, y + 2);

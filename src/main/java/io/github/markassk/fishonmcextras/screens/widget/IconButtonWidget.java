@@ -50,7 +50,7 @@ public class IconButtonWidget extends ClickableWidget {
         // Box
         context.fill(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, this.isHovered() ? alphaInt | 0xFFFFFF : alphaInt);
         if(ThemingHandler.instance().currentThemeType == Theming.ThemeType.OFF) {
-            context.drawBorder(this.getX(), this.getY(), this.width, this.height, this.hovered ? 0xFFFFAA00 : 0xFFFFFFFF);
+            context.drawStrokedRectangle(this.getX(), this.getY(), this.width, this.height, this.hovered ? 0xFFFFAA00 : 0xFFFFFFFF);
         }
 
         // Button Text
@@ -60,7 +60,7 @@ public class IconButtonWidget extends ClickableWidget {
 
         // Icon
         if(itemIcon != null || !Objects.equals(stringIcon, "")) {
-            context.drawBorder(this.getX() + padding - 1, this.getY() + (padding * 2 + iconSize) / 2 - iconSize / 2 - 1, iconSize + 2, iconSize + 2, 0xFFFFFFFF);
+            context.drawStrokedRectangle(this.getX() + padding - 1, this.getY() + (padding * 2 + iconSize) / 2 - iconSize / 2 - 1, iconSize + 2, iconSize + 2, 0xFFFFFFFF);
             if(itemIcon != null) {
                 context.drawItem(itemIcon, this.getX() + padding, this.getY() + (padding * 2 + iconSize) / 2 - iconSize / 2);
             } else if (!Objects.equals(stringIcon, "")) {

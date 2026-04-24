@@ -88,8 +88,8 @@ public class AutoTippingHandler {
 								.append(Text.literal("Click").formatted(Formatting.YELLOW))
 								.append(Text.literal("]").formatted(Formatting.DARK_GRAY))
 								.setStyle(Style.EMPTY
-										.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, payCommand))
-										.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(payCommand)))));
+										.withClickEvent(new ClickEvent.RunCommand(payCommand))
+										.withHoverEvent(new HoverEvent.ShowText(Text.literal(payCommand)))));
 				return;
 			}
 

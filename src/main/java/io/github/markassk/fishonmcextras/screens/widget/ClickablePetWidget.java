@@ -22,7 +22,7 @@ public class ClickablePetWidget extends ClickableItemWidget {
         super.renderWidget(context, mouseX, mouseY, delta);
 
         if(PetCalculatorHandler.instance().selectedIndex[list.id] == this.index) {
-            context.drawBorder(getX(), getY(), width, height, 0xFFFFD700);
+            context.drawStrokedRectangle(getX(), getY(), width, height, 0xFFFFD700);
         }
     }
 

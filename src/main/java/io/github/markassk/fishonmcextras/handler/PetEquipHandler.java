@@ -153,7 +153,7 @@ public class PetEquipHandler  {
         if (nbtCompound == null) {
             return;
         }
-        NbtList items = nbtCompound.getList("item", NbtElement.COMPOUND_TYPE);
+        NbtList items = nbtCompound.getListOrEmpty("item");
         if (items.isEmpty()) {
             return;
         }

@@ -86,11 +86,11 @@ public class PetEquipHud {
                         scaledX - maxLength - padding * 2 - 16 - padding - extraBoxWidth,
                         scaledY + ((textList.size() - 1) * lineHeight) + padding * 3 - heightClampTranslation,
                         alphaInt);
-                drawContext.drawBorder(scaledX - padding + padding / 2,
+                drawContext.drawStrokedRectangle(scaledX - padding + padding / 2,
                         scaledY + padding + 1 - padding / 2 - heightClampTranslation, -16 - padding, 16 + padding,
                         alphaInt | borderColor);
                 if (itemBoxVisible) {
-                    drawContext.drawBorder(scaledX - padding + padding / 2 - (16 + padding + itemBoxGap),
+                    drawContext.drawStrokedRectangle(scaledX - padding + padding / 2 - (16 + padding + itemBoxGap),
                             scaledY + padding + 1 - padding / 2 - heightClampTranslation, -16 - padding,
                             16 + padding, alphaInt | 0xFFFFFF);
                 }
@@ -99,11 +99,11 @@ public class PetEquipHud {
                         scaledX + maxLength + padding * 2 + 16 + padding + extraBoxWidth,
                         scaledY + ((textList.size() - 1) * lineHeight) + padding * 3 - heightClampTranslation,
                         alphaInt);
-                drawContext.drawBorder(scaledX + padding - padding / 2,
+                drawContext.drawStrokedRectangle(scaledX + padding - padding / 2,
                         scaledY + padding + 1 - padding / 2 - heightClampTranslation, 16 + padding, 16 + padding,
                         alphaInt | borderColor);
                 if (itemBoxVisible) {
-                    drawContext.drawBorder(scaledX + padding - padding / 2 + 16 + padding + itemBoxGap,
+                    drawContext.drawStrokedRectangle(scaledX + padding - padding / 2 + 16 + padding + itemBoxGap,
                             scaledY + padding + 1 - padding / 2 - heightClampTranslation, 16 + padding,
                             16 + padding, alphaInt | 0xFFFFFF);
                 }
